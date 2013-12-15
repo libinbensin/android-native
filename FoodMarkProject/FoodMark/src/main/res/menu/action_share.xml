@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:bensin="http://schemas.android.com/apk/res-auto" >
+    
+  <item 
+        android:id="@+id/menu_item_share"
+        bensin:showAsAction="always"
+        android:title="@string/share_title"
+        bensin:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+  
+  <item android:id="@+id/action_bookmark"
+          android:icon="@drawable/icon_bookmark"
+          android:title="@string/empty"
+          bensin:showAsAction="ifRoom"/>
+    
+</menu>

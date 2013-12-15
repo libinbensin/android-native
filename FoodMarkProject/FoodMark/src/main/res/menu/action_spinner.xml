@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bensin="http://schemas.android.com/apk/res-auto" >
+    
+    <item android:id="@+id/menu_spinner"
+          android:title="@string/empty"
+          bensin:showAsAction="always"
+          android:visible="true"
+          bensin:actionProviderClass="android.widget.SpinnerProvider"
+          bensin:actionViewClass="android.widget.Spinner"/>
+
+</menu>
