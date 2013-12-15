@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Bensin</string>
+   	<string name="empty"></string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_search">Search</string>
+	<string name="enter_search">Enter Search Here..</string>
+	<string name="place_icon_description"></string>
+	<string name="search_icon_description"></string>
+	<string name="share_title">Share</string>
+	
+	 <string name="action_restaurant">Restaurant</string>
+	 <string name="action_bar">Bar</string>
+	 <string name="action_cafe">Cafe</string>
+	 
+	 <string name="action_search_title">Search Place</string>
+	 <string name="search_hint">Search Place</string>
+	 
+	 <string name="place_empty_list">Unable to get the current location.Please check your network or do a search again.</string>
+	 <string name="location_error_message">Unable to find the location..please try again</string>
+	 <string name="menu_bookmarks">Bookmarks</string>
+	 <string name="menu_settings">Settings</string>
+	 <string name="menu_help">Help</string>
+</resources>
