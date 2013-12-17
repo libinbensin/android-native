@@ -12,6 +12,10 @@ import com.android.foodmark.fragment.GooglePlaceListFragment;
 import com.android.foodmark.model.GoogleAutoComplete;
 import com.android.foodmark.utils.AppGeoCoder;
 import com.android.foodmark.utils.AppUtil;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -33,7 +37,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
-public class GooglePlaceListActivity extends BaseActivity implements OnQueryTextListener , OnLoaderResultListener , OnSuggestionListener
+public class GooglePlaceListActivity extends BaseActivity
+    implements OnQueryTextListener , OnLoaderResultListener , OnSuggestionListener ,
+    GooglePlayServicesClient.ConnectionCallbacks ,GooglePlayServicesClient.OnConnectionFailedListener
 {
 	private GooglePlaceListFragment placeListFragment = null;
 	
@@ -43,6 +49,8 @@ public class GooglePlaceListActivity extends BaseActivity implements OnQueryText
 	private static final String[] SYMBOL_COLUMS = {BaseColumns._ID, "text"};
 	
 	private GoogleAutoCompleteCallback autoCompleteCallback = null;
+
+    private LocationClient mLocationClient = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -51,15 +59,35 @@ public class GooglePlaceListActivity extends BaseActivity implements OnQueryText
 		setContentView(R.layout.activity_place_list);
 		if(savedInstanceState == null)
 		{
+            mLocationClient = new LocationClient(this,this,this);
+            mLocationClient.connect();
+
 			placeListFragment = new GooglePlaceListFragment();
-			getSupportFragmentManager().beginTransaction().add(R.id.search_listframe, placeListFragment).commit();
+			getSupportFragmentManager().beginTransaction().add(
+                    R.id.search_listframe, placeListFragment).commit();
 		}
 		else
 		{
-			placeListFragment = (GooglePlaceListFragment) getSupportFragmentManager().findFragmentById(R.id.search_listframe);
+			placeListFragment = (GooglePlaceListFragment)
+                    getSupportFragmentManager().findFragmentById(R.id.search_listframe);
+            placeListFragment.fetchData(false);
 		}
+
+
 	}
-	
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+    }
+
 	@Override
 	protected void onPause()
 	{
@@ -70,9 +98,21 @@ public class GooglePlaceListActivity extends BaseActivity implements OnQueryText
 	protected void onResume()
 	{
 		super.onResume();
+
 	}
-	
-	@Override
+
+    private boolean serviceConnected()
+    {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+
+        if(ConnectionResult.SUCCESS == resultCode)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
 	protected boolean isHomeAsUpEnabled() 
 	{
 		return false;
@@ -116,7 +156,8 @@ public class GooglePlaceListActivity extends BaseActivity implements OnQueryText
 	{
 		Spinner spinner = (Spinner) MenuItemCompat.getActionView(menuItem);
 		
-		SpinnerAdapter spinnerAdapter =  ArrayAdapter.createFromResource(this, R.array.spinner_filter_items, R.layout.spinner_menu_item);
+		SpinnerAdapter spinnerAdapter =  ArrayAdapter.createFromResource(
+                this, R.array.spinner_filter_items, R.layout.spinner_menu_item);
 		spinner.setAdapter(spinnerAdapter);
 		spinner.setSelection(getDefaultSelectionIndex(), false);
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() 
@@ -157,7 +198,8 @@ public class GooglePlaceListActivity extends BaseActivity implements OnQueryText
 	 */
 	private int getDefaultSelectionIndex() 
 	{
-		String launchType = MainApplication.getPreferences().getString("TYPE",getResources().getString(R.string.action_restaurant));
+		String launchType = MainApplication.getPreferences().getString(
+                "TYPE",getResources().getString(R.string.action_restaurant));
 		if(launchType.equals(getResources().getString(R.string.action_bar)))
 		{
 			return 1;
@@ -188,7 +230,8 @@ public class GooglePlaceListActivity extends BaseActivity implements OnQueryText
 	private void refresh(String argType) 
 	{
 		// refresh the view only if the launch type is changed
-		if(!argType.equals(MainApplication.getPreferences().getString(AppConstants.TYPE, AppConstants.BLANK)))
+		if(!argType.equals(MainApplication.getPreferences().getString(
+                AppConstants.TYPE, AppConstants.BLANK)))
 		{
 			MainApplication.getPreferences().edit().putString(AppConstants.TYPE,argType).commit();
 
@@ -231,7 +274,6 @@ public class GooglePlaceListActivity extends BaseActivity implements OnQueryText
 			}
 			mSearchView.getSuggestionsAdapter().notifyDataSetChanged();
 		}
-        
 	}
 
 	@Override
@@ -262,4 +304,34 @@ public class GooglePlaceListActivity extends BaseActivity implements OnQueryText
 	{
 		return false;
 	}
+
+    @Override
+    public void onConnected(Bundle bundle)
+    {
+        if(serviceConnected())
+        {
+            Location location = mLocationClient.getLastLocation();
+            MainApplication.getAppInstance().setLocation(location);
+        }
+
+        if(mLocationClient != null)
+        {
+            mLocationClient.disconnect();
+        }
+        // update the UI
+        placeListFragment.fetchData(true);
+    }
+
+    @Override
+    public void onDisconnected()
+    {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult)
+    {
+        // update the UI . Lets retrieve the location from location manager
+        placeListFragment.fetchData(true);
+    }
 }
