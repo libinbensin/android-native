@@ -134,21 +134,21 @@ public class GooglePlaceDetailFragment extends Fragment
 					{
 						downloadImageView.setBackgroundResource(R.drawable.no_image);
 					}
-					
+
 					if(argGooglePlaceDetail.getReviews() != null)
 					{
 						PlaceReviewFragment reviewFragment = new PlaceReviewFragment();
-						
+
 						getChildFragmentManager().beginTransaction().replace(R.id.review_detailframe, reviewFragment).commit();
-						
+
 						// update review list
 						ReviewAdapter reviewListAdapter = new ReviewAdapter(getActivity());
-						
+
 						for(GooglePlaceDetail.Reviews review: argGooglePlaceDetail.getReviews())
 						{
 							reviewListAdapter.add(review);
 						}
-						
+
 						reviewFragment.setListAdapter(reviewListAdapter);
 					}
 					if(mOnResultLoadedListener != null)

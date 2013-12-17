@@ -30,7 +30,6 @@ public class GooglePlaceListFragment extends ListFragment
 		placeListAdapter = new PlaceListAdapter(getActivity());
 		setListAdapter(placeListAdapter);
 		setListShown(true);
-		fetchData(false);
 	}
 	
 	
@@ -44,7 +43,6 @@ public class GooglePlaceListFragment extends ListFragment
 		
 		GooglePlaceCallback placeCallback =  new GooglePlaceCallback(getActivity()) 
 		{
-			
 			@Override
 			protected void onLoaderResult(List<GooglePlace> argGooglePlace)
 			{
@@ -70,7 +68,6 @@ public class GooglePlaceListFragment extends ListFragment
 				((BaseActivity)getActivity()).hideLoading();
 				
 			}
-
 			
 		};
 		
@@ -82,7 +79,6 @@ public class GooglePlaceListFragment extends ListFragment
 		{	
 			getLoaderManager().initLoader(1, bundle,placeCallback);
 		}
-		
 	}
 	
 	
@@ -90,13 +86,11 @@ public class GooglePlaceListFragment extends ListFragment
 	public void onListItemClick (ListView l, View v, int position, long id)
 	{
 		GooglePlace googlePlace = placeListAdapter.getItem(position);
-		
 		String selectedRef =  googlePlace.getReference();
 		
 		Intent intent = new Intent(getActivity(), GooglePlaceDetailActivity.class);
 		intent.putExtra("REFERENCE", selectedRef);
 		startActivity(intent);
-		
 	}
 	
 	/**
