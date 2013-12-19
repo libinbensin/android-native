@@ -1,10 +1,12 @@
 package com.android.foodmark;
 
+import com.android.foodmark.database.SQLiteAsyncTask;
 import com.android.foodmark.utils.ImageDownloader;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationManager;
 
@@ -21,6 +23,8 @@ public class MainApplication extends Application
 	private static SharedPreferences preferences;
 	
 	private  Location mLocation = null;
+
+    private SQLiteDatabase mSQLiteDatabase = null;
 	
 	public static MainApplication getAppInstance()
 	{	
@@ -48,8 +52,20 @@ public class MainApplication extends Application
 		appInstance = this;
 		initPreference();
 	}
-	
-	public void setLocation(Location location)
+
+    private void initSQLite()
+    {
+        // create an sqlite task instance to access the database
+        SQLiteAsyncTask sqLiteAsyncTask = new SQLiteAsyncTask(getApplicationContext());
+        mSQLiteDatabase = (SQLiteDatabase) sqLiteAsyncTask.loadInBackground();
+    }
+
+    public SQLiteDatabase getSQLiteInstance()
+    {
+        return mSQLiteDatabase;
+    }
+
+    public void setLocation(Location location)
 	{
 		mLocation = location;
 	}
