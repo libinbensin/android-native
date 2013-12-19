@@ -1,10 +1,12 @@
 package com.android.foodmark.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+import com.android.foodmark.activity.VideoDetailActivity;
 import com.android.foodmark.adapter.VideoListAdapter;
 import com.android.foodmark.model.VideoDetail;
 import com.android.foodmark.provider.VideoContentProvider;
@@ -45,6 +47,10 @@ public class VideoListFragment extends ListFragment
     {
         VideoDetail videoDetail = mVideoListAdapter.getItem(position);
         long videoId = videoDetail.getId();
+
+        Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+        intent.putExtra("VIDEO_ID",videoId);
+        startActivity(intent);
     }
 
     @Override
