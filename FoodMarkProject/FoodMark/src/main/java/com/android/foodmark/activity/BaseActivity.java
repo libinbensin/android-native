@@ -1,6 +1,8 @@
 package com.android.foodmark.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -111,9 +113,27 @@ public class BaseActivity extends ActionBarActivity
 				finish();
 				return true;
 			}
+            case R.id.menu_audio:
+            {
+                Intent intent = new Intent(this , AudioListActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.menu_video:
+            {
+                Intent intent = new Intent(this,VideoListActivity.class);
+                startActivity(intent);
+                break;
+            }
 			default:
 				break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+    }
 }
