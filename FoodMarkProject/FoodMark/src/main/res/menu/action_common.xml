@@ -20,5 +20,13 @@
         android:id="@+id/menu_video"
         android:showAsAction="never"
         android:title="Video"/>
+    <item
+        android:id="@+id/menu_take_picture"
+        android:showAsAction="never"
+        android:title="Take Picture"/>
+    <item
+        android:id="@+id/menu_take_video"
+        android:showAsAction="never"
+        android:title="Take Video"/>
 
 </menu>

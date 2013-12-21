@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.foodmark.R;
+import com.android.foodmark.constants.AppConstants;
 
 public class BaseActivity extends ActionBarActivity
 {
@@ -122,6 +123,20 @@ public class BaseActivity extends ActionBarActivity
             case R.id.menu_video:
             {
                 Intent intent = new Intent(this,VideoListActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.menu_take_picture:
+            {
+                Intent intent = new Intent(this,CameraActivity.class);
+                intent.putExtra("MEDIA_TYPE", AppConstants.MEDIA_TYPE_IMAGE);
+                startActivity(intent);
+                break;
+            }
+            case R.id.menu_take_video:
+            {
+                Intent intent = new Intent(this,CameraActivity.class);
+                intent.putExtra("MEDIA_TYPE", AppConstants.MEDIA_TYPE_VIDEO);
                 startActivity(intent);
                 break;
             }
