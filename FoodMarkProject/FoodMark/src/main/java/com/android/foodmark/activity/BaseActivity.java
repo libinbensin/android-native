@@ -114,32 +114,6 @@ public class BaseActivity extends ActionBarActivity
 				finish();
 				return true;
 			}
-            case R.id.menu_audio:
-            {
-                Intent intent = new Intent(this , AudioListActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case R.id.menu_video:
-            {
-                Intent intent = new Intent(this,VideoListActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case R.id.menu_take_picture:
-            {
-                Intent intent = new Intent(this,CameraActivity.class);
-                intent.putExtra("MEDIA_TYPE", AppConstants.MEDIA_TYPE_IMAGE);
-                startActivity(intent);
-                break;
-            }
-            case R.id.menu_take_video:
-            {
-                Intent intent = new Intent(this,CameraActivity.class);
-                intent.putExtra("MEDIA_TYPE", AppConstants.MEDIA_TYPE_VIDEO);
-                startActivity(intent);
-                break;
-            }
 			default:
 				break;
 		}
