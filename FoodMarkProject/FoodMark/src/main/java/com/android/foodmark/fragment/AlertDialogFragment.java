@@ -1,5 +1,6 @@
 package com.android.foodmark.fragment;
 
+import com.android.foodmark.R;
 import com.android.foodmark.constants.AppConstants;
 
 import android.app.AlertDialog;
@@ -22,10 +23,10 @@ public abstract class AlertDialogFragment extends DialogFragment
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		super.onCreateDialog(savedInstanceState);
-		Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(),android.R.style.Theme_Light));
+		Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.dialog_light));
 		AlertDialog dialog = builder.create();
-		
-		dialog.setTitle("You will be leaving the app to make call");
+
+		dialog.setTitle(getResources().getString(R.string.alert_call_title));
 		dialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstants.OK,new OnClickListener() {
 			
 			@Override
