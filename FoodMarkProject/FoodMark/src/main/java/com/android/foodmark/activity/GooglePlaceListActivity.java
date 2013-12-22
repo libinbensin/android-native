@@ -1,22 +1,5 @@
 package com.android.foodmark.activity;
 
-import java.util.List;
-
-import com.android.foodmark.MainApplication;
-import com.android.foodmark.R;
-import com.android.foodmark.adapter.SearchCursorAdapter;
-import com.android.foodmark.callbacks.GoogleAutoCompleteCallback;
-import com.android.foodmark.callbacks.GoogleAutoCompleteCallback.OnLoaderResultListener;
-import com.android.foodmark.constants.AppConstants;
-import com.android.foodmark.fragment.GooglePlaceListFragment;
-import com.android.foodmark.model.GoogleAutoComplete;
-import com.android.foodmark.utils.AppGeoCoder;
-import com.android.foodmark.utils.AppUtil;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
@@ -37,7 +20,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
-public class GooglePlaceListActivity extends BaseActivity
+import com.android.foodmark.MainApplication;
+import com.android.foodmark.R;
+import com.android.foodmark.adapter.SearchCursorAdapter;
+import com.android.foodmark.callbacks.GoogleAutoCompleteCallback;
+import com.android.foodmark.callbacks.GoogleAutoCompleteCallback.OnLoaderResultListener;
+import com.android.foodmark.constants.AppConstants;
+import com.android.foodmark.fragment.GooglePlaceListFragment;
+import com.android.foodmark.model.GoogleAutoComplete;
+import com.android.foodmark.utils.AppGeoCoder;
+import com.android.foodmark.utils.AppUtil;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
+
+import java.util.List;
+
+public class GooglePlaceListActivity extends DrawerActivity
     implements OnQueryTextListener , OnLoaderResultListener , OnSuggestionListener ,
     GooglePlayServicesClient.ConnectionCallbacks ,GooglePlayServicesClient.OnConnectionFailedListener
 {
@@ -51,12 +51,11 @@ public class GooglePlaceListActivity extends BaseActivity
 	private GoogleAutoCompleteCallback autoCompleteCallback = null;
 
     private LocationClient mLocationClient = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_place_list);
 		if(savedInstanceState == null)
 		{
             mLocationClient = new LocationClient(this,this,this);
@@ -64,17 +63,15 @@ public class GooglePlaceListActivity extends BaseActivity
 
 			placeListFragment = new GooglePlaceListFragment();
 			getSupportFragmentManager().beginTransaction().add(
-                    R.id.search_listframe, placeListFragment).commit();
+                    R.id.activity_frame, placeListFragment).commit();
 		}
 		else
 		{
 			placeListFragment = (GooglePlaceListFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.search_listframe);
+                    getSupportFragmentManager().findFragmentById(R.id.activity_frame);
             placeListFragment.fetchData(false);
 		}
-
-
-	}
+    }
 
     @Override
     protected void onStart()
@@ -148,7 +145,7 @@ public class GooglePlaceListActivity extends BaseActivity
 		autoCompleteCallback = new GoogleAutoCompleteCallback(this);
 		
 		autoCompleteCallback.setOnLoaderResultListener(this);
-		
+
 		return handled;
 	}
 	
@@ -334,4 +331,5 @@ public class GooglePlaceListActivity extends BaseActivity
         // update the UI . Lets retrieve the location from location manager
         placeListFragment.fetchData(true);
     }
+
 }
