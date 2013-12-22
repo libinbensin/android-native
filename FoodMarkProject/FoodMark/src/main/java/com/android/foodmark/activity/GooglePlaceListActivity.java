@@ -56,21 +56,13 @@ public class GooglePlaceListActivity extends DrawerActivity
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
-		if(savedInstanceState == null)
-		{
-            mLocationClient = new LocationClient(this,this,this);
-            mLocationClient.connect();
 
-			placeListFragment = new GooglePlaceListFragment();
-			getSupportFragmentManager().beginTransaction().add(
+        mLocationClient = new LocationClient(this,this,this);
+        mLocationClient.connect();
+
+		placeListFragment = new GooglePlaceListFragment();
+		getSupportFragmentManager().beginTransaction().add(
                     R.id.activity_frame, placeListFragment).commit();
-		}
-		else
-		{
-			placeListFragment = (GooglePlaceListFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.activity_frame);
-            placeListFragment.fetchData(false);
-		}
     }
 
     @Override

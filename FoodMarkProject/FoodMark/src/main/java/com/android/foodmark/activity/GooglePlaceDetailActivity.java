@@ -27,20 +27,14 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_place_detail);
-		if(savedInstanceState == null)
-		{
-			googlePlaceDetailFragment = new GooglePlaceDetailFragment();
+
+        googlePlaceDetailFragment = new GooglePlaceDetailFragment();
 			Bundle bundle = new Bundle();
 			bundle.putString(AppConstants.REFERENCE, getIntent().getStringExtra(AppConstants.REFERENCE));
 			googlePlaceDetailFragment.setArguments(bundle);
 			
 			getSupportFragmentManager().beginTransaction().add(R.id.search_detailframe, googlePlaceDetailFragment).commit();
-		}
-		else
-		{
-			googlePlaceDetailFragment = (GooglePlaceDetailFragment) getSupportFragmentManager().findFragmentById(R.id.search_detailframe);
-		}
-		
+
 		googlePlaceDetailFragment.setOnResultLoadedListener(this);
 	}
 
