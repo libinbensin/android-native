@@ -15,7 +15,8 @@ public class PlaceReviewFragment extends ListFragment
 	public void onActivityCreated(Bundle bundle)
 	{
 		super.onActivityCreated(bundle);
-		setListShown(true);
+        getListView().setDivider(null);
+        getListView().setDividerHeight(0);
 	}
 	
 	@Override
