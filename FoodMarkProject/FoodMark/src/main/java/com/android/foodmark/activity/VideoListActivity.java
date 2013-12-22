@@ -19,18 +19,10 @@ public class VideoListActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_list);
 
-        if(savedInstanceState == null)
-        {
-            mVideoListFragment = new VideoListFragment();
+        mVideoListFragment = new VideoListFragment();
             // add the fragment to fragment manager
-            getSupportFragmentManager().beginTransaction().add(
+        getSupportFragmentManager().beginTransaction().add(
                     R.id.video_list_frame,mVideoListFragment).commit();
-        }
-        else
-        {
-            mVideoListFragment = (VideoListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.video_list_frame);
-        }
     }
 
     @Override

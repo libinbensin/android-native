@@ -19,18 +19,10 @@ public class AudioListActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_list);
 
-        if(savedInstanceState == null)
-        {
-            mAudioListFragment = new AudioListFragment();
+        mAudioListFragment = new AudioListFragment();
             // add the fragment to fragment manager
             getSupportFragmentManager().beginTransaction().add(
                     R.id.audio_listframe,mAudioListFragment).commit();
-        }
-        else
-        {
-            mAudioListFragment = (AudioListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.audio_listframe);
-        }
     }
 
     @Override

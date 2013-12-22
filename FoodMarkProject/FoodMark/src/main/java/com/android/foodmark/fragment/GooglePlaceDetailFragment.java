@@ -75,14 +75,13 @@ public class GooglePlaceDetailFragment extends Fragment
 					}
 					if(argGooglePlaceDetail.getPhonenumber() != null)
 					{
-						TextView phoneTextView = ((TextView)getView().findViewById(R.id.phonenumber));
+						TextView phoneTextView = ((TextView)getView().findViewById(R.id.phone_number));
 						final String phoneNumber = argGooglePlaceDetail.getPhonenumber();
 						phoneTextView.setText(phoneNumber);
 						ImageView phoneIcon = (ImageView) getView().findViewById(R.id.phone_icon);
 						phoneIcon.setImageDrawable(getResources().getDrawable(R.drawable.phone_contact));
 						
-						LinearLayout makCall = (LinearLayout) getView().findViewById(R.id.phonenumber_layout);
-						makCall.setBackgroundColor(getResources().getColor(R.color.WhiteSmoke));
+						LinearLayout makCall = (LinearLayout) getView().findViewById(R.id.phone_number_layout);
 						makCall.setOnClickListener(new OnClickListener() {
 							
 							@Override

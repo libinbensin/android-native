@@ -47,8 +47,8 @@
 		        android:layout_gravity="left|center_horizontal"/>
 		    
 		    <LinearLayout 
-		        android:id="@+id/phonenumber_layout"
-		        android:layout_width="match_parent"
+		        android:id="@+id/phone_number_layout"
+		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:orientation="horizontal"
 		        android:layout_margin="5dp"
@@ -60,7 +60,7 @@
 		        	android:layout_height="40dp"
 		        	android:contentDescription="@string/empty"/>
 	    	    <TextView
-			        android:id="@+id/phonenumber"
+			        android:id="@+id/phone_number"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:paddingTop="5dp"

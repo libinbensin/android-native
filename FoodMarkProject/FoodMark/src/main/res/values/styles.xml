@@ -21,4 +21,9 @@
         <item name="android:dropDownSelector">@android:color/darker_gray</item>
     </style>
 
+    <style name="dialog_light" parent="android:Theme.Holo.Light.Dialog">
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:windowBackground">@color/WhiteGrey</item>
+    </style>
+
 </resources>
