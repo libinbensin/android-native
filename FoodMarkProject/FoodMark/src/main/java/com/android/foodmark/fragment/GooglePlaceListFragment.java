@@ -1,7 +1,12 @@
 package com.android.foodmark.fragment;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
@@ -51,6 +56,9 @@ public class GooglePlaceListFragment extends ListFragment
 				
 				if(argGooglePlace != null && argGooglePlace.size() > 0)
 				{
+                    SortedMap<Double , GooglePlace> placeMap = new TreeMap<Double, GooglePlace>();
+
+
 					for(GooglePlace googlePlace : argGooglePlace)
 					{
 						String dis = getDistance(googlePlace);
@@ -58,8 +66,19 @@ public class GooglePlaceListFragment extends ListFragment
 						{
 							googlePlace.setDistance(dis);
 						}
-						placeListAdapter.add(googlePlace);
+                        placeMap.put(Double.valueOf(dis),googlePlace);
 					}
+
+                    // iterate through the map
+                    /*for(Map.Entry<Double,GooglePlace> placeEntry : placeMap.entrySet())
+                    {
+                        placeListAdapter.add(placeEntry.getValue());
+                    }*/
+                    Iterator iterator = placeMap.keySet().iterator();
+                    while (iterator.hasNext())
+                    {
+                        placeListAdapter.add(placeMap.get(iterator.next()));
+                    }
 				}
 				else
 				{
