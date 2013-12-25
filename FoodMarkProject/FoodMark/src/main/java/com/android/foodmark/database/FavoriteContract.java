@@ -33,6 +33,7 @@ public final class FavoriteContract
     private static final String INTEGER_PRIMARY_KEY = "INTEGER PRIMARY KEY";
     public static final String TEXT_TYPE = " TEXT";
     public static final String INTEGER_TYPE = " INTEGER";
+    public static final String BLOB_TYPE = " BLOB";
     public static final String COMMA_SEP = ",";
     public static final String SPACE = " ";
     public static final String OPEN_BRACKET = "(";
@@ -42,7 +43,7 @@ public final class FavoriteContract
     public static final String CREATE_FAVORITE_TABLE = CREATE_TABLE + SPACE +
             FavoriteEntry.TABLE_NAME + SPACE + OPEN_BRACKET + FavoriteEntry._ID + SPACE +
             INTEGER_PRIMARY_KEY + COMMA_SEP + FavoriteEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE +
-            COMMA_SEP + FavoriteEntry.COLUMN_TITLE + TEXT_TYPE +
+            COMMA_SEP + FavoriteEntry.COLUMN_TITLE + BLOB_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_VICINITY  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_DISTANCE  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_RATING  + TEXT_TYPE +
