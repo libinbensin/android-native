@@ -9,7 +9,6 @@
         bensin:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
   
   <item android:id="@+id/action_bookmark"
-          android:icon="@drawable/icon_bookmark"
           android:title="@string/empty"
           bensin:showAsAction="ifRoom"/>
     

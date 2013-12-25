@@ -27,6 +27,8 @@ public class GooglePlace extends BaseModel
 	private Geometry geometry;
 	/** distance in miles */
 	private String distance;
+
+    private boolean favorite;
 	
 
 	/**
@@ -108,6 +110,15 @@ public class GooglePlace extends BaseModel
 	public void setDistance(String distance) {
 		this.distance = distance;
 	}
-	
-	
+
+
+    public boolean isFavorite()
+    {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite)
+    {
+        this.favorite = favorite;
+    }
 }

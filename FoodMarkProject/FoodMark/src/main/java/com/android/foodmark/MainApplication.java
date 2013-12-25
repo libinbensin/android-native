@@ -51,6 +51,7 @@ public class MainApplication extends Application
 		super.onCreate();
 		appInstance = this;
 		initPreference();
+        initSQLite();
 	}
 
     private void initSQLite()

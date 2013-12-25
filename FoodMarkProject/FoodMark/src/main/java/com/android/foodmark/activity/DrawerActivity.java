@@ -141,7 +141,11 @@ public class DrawerActivity extends BaseActivity
                     break;
                 }
                 case 5:
+                {
+                    Intent intent = new Intent(DrawerActivity.this,FavoriteActivity.class);
+                    startActivity(intent);
                     break;
+                }
                 case 6:
                     break;
                 case 7:

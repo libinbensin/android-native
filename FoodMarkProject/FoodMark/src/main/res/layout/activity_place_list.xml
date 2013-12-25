@@ -7,7 +7,7 @@
     tools:context=".GooglePlaceListActivity" >
 
     <FrameLayout 
-        android:id="@+id/search_listframe"
+        android:id="@+id/activity_frame"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

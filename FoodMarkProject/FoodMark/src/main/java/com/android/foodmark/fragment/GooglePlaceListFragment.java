@@ -1,12 +1,11 @@
 package com.android.foodmark.fragment;
 
-import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import android.content.Intent;
+import android.location.Location;
+import android.os.Bundle;
+import android.support.v4.app.ListFragment;
+import android.view.View;
+import android.widget.ListView;
 
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
@@ -17,12 +16,11 @@ import com.android.foodmark.callbacks.GooglePlaceCallback;
 import com.android.foodmark.model.GooglePlace;
 import com.android.foodmark.utils.AppUtil;
 
-import android.content.Intent;
-import android.location.Location;
-import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.view.View;
-import android.widget.ListView;
+import java.text.DecimalFormat;
+import java.util.Iterator;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class GooglePlaceListFragment extends ListFragment
 {
@@ -36,13 +34,13 @@ public class GooglePlaceListFragment extends ListFragment
 		setListAdapter(placeListAdapter);
 		setListShown(true);
 	}
-	
-	
+
 	public void fetchData(boolean argIsReload)
 	{
 		// show loading
 		((BaseActivity)getActivity()).showLoading();
-		String launchType = MainApplication.getPreferences().getString("TYPE",getResources().getString(R.string.action_restaurant));
+
+        String launchType = MainApplication.getPreferences().getString("TYPE",getResources().getString(R.string.action_restaurant));
 		Bundle bundle = new Bundle();
 		bundle.putString("TYPE", AppUtil.toLowerCase(launchType));
 		
@@ -53,7 +51,7 @@ public class GooglePlaceListFragment extends ListFragment
 			{
 
 				placeListAdapter.clear();
-				
+
 				if(argGooglePlace != null && argGooglePlace.size() > 0)
 				{
                     SortedMap<Double , GooglePlace> placeMap = new TreeMap<Double, GooglePlace>();
@@ -69,7 +67,7 @@ public class GooglePlaceListFragment extends ListFragment
                         placeMap.put(Double.valueOf(dis),googlePlace);
 					}
 
-                    // iterate through the map
+					// iterate through the map
                     /*for(Map.Entry<Double,GooglePlace> placeEntry : placeMap.entrySet())
                     {
                         placeListAdapter.add(placeEntry.getValue());
@@ -108,7 +106,7 @@ public class GooglePlaceListFragment extends ListFragment
 		String selectedRef =  googlePlace.getReference();
 		
 		Intent intent = new Intent(getActivity(), GooglePlaceDetailActivity.class);
-		intent.putExtra("REFERENCE", selectedRef);
+        intent.putExtra("PLACE",googlePlace);
 		startActivity(intent);
 	}
 	
