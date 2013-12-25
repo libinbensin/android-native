@@ -36,6 +36,7 @@ public final class FavoriteExecutor
         contentValues.put(FavoriteEntry.COLUMN_RATING, googlePlace.getRating());
         contentValues.put(FavoriteEntry.COLUMN_REFERENCE, googlePlace.getReference());
         contentValues.put(FavoriteEntry.COLUMN_IS_FAVORITE ,googlePlace.isFavorite() ? 1 : 0);
+        contentValues.put(FavoriteEntry.COLUMN_ICON_URL , googlePlace.getIcon());
 
        return db.insert(FavoriteContract.FavoriteEntry.TABLE_NAME , null , contentValues);
     }
@@ -68,7 +69,8 @@ public final class FavoriteExecutor
                 FavoriteEntry.COLUMN_DISTANCE ,
                 FavoriteEntry.COLUMN_RATING ,
                 FavoriteEntry.COLUMN_REFERENCE,
-                FavoriteEntry.COLUMN_IS_FAVORITE};
+                FavoriteEntry.COLUMN_IS_FAVORITE,
+                FavoriteEntry.COLUMN_ICON_URL};
 
         Cursor cursor = db.query(FavoriteEntry.TABLE_NAME, queryList,null,null,null,null,null);
 
@@ -77,7 +79,9 @@ public final class FavoriteExecutor
             do
             {
                 GooglePlace googlePlace = new GooglePlace();
-                int index = cursor.getColumnIndex(FavoriteEntry.COLUMN_TITLE);
+                int index = 0;
+
+                index = cursor.getColumnIndex(FavoriteEntry.COLUMN_TITLE);
                 googlePlace.setDescription(decryptedString(cursor.getBlob(index)));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_VICINITY);
                 googlePlace.setVicinity(cursor.getString(index));
@@ -89,6 +93,9 @@ public final class FavoriteExecutor
                 googlePlace.setReference(cursor.getString(index));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_IS_FAVORITE);
                 googlePlace.setFavorite( (cursor.getInt(index) == 1 ) ? true : false);
+                index = cursor.getColumnIndex(FavoriteEntry.COLUMN_ICON_URL);
+                googlePlace.setIcon(cursor.getString(index));
+
                 placeHashMap.put(Double.valueOf(googlePlace.getDistance()),googlePlace);
             }
             while (cursor.moveToNext());
