@@ -138,7 +138,8 @@ public class GooglePlaceDetailFragment extends Fragment
 					{
 						PlaceReviewFragment reviewFragment = new PlaceReviewFragment();
 
-						getChildFragmentManager().beginTransaction().replace(R.id.review_detailframe, reviewFragment).commit();
+						getChildFragmentManager().beginTransaction().replace(
+                                R.id.review_detailframe, reviewFragment).commit();
 
 						// update review list
 						ReviewAdapter reviewListAdapter = new ReviewAdapter(getActivity());
@@ -150,6 +151,17 @@ public class GooglePlaceDetailFragment extends Fragment
 
 						reviewFragment.setListAdapter(reviewListAdapter);
 					}
+                    else
+                    {
+                        EmptyFragment emptyFragment = new EmptyFragment();
+                        Bundle bundle = new Bundle();
+
+                        bundle.putString("TITLE" ,
+                                getResources().getString(R.string.empty_review_list));
+                        emptyFragment.setArguments(bundle);
+                        getChildFragmentManager().beginTransaction().replace(
+                                R.id.review_detailframe,emptyFragment).commit();
+                    }
 					if(mOnResultLoadedListener != null)
 					{
 						mOnResultLoadedListener.onResultData(argGooglePlaceDetail);

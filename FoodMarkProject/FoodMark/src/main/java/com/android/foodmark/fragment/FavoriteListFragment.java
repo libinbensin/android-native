@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.android.foodmark.MainApplication;
+import com.android.foodmark.R;
 import com.android.foodmark.activity.BaseActivity;
 import com.android.foodmark.activity.GooglePlaceDetailActivity;
 import com.android.foodmark.adapter.PlaceListAdapter;
@@ -43,6 +44,10 @@ public class FavoriteListFragment extends ListFragment
                 placeListAdapter.add(dbPlaceMap.get(iterator.next()));
             }
             ((BaseActivity)getActivity()).hideLoading();
+        }
+        else
+        {
+            setEmptyText(getResources().getString(R.string.empty_favorite_list));
         }
     }
 
