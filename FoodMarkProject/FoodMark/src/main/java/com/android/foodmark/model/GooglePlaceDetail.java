@@ -29,9 +29,10 @@ public class GooglePlaceDetail extends BaseModel
 	private String id;
 	
 	private List<Photos> photos;
-	
-	
-	public class Photos
+
+    private boolean favorite;
+
+    public class Photos
 	{
 		private String height;
 		@SerializedName("html_attributions")
@@ -282,6 +283,14 @@ public class GooglePlaceDetail extends BaseModel
 		this.website = website;
 	}
 
-	
+    public boolean isFavorite()
+    {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite)
+    {
+        this.favorite = favorite;
+    }
 	
 }

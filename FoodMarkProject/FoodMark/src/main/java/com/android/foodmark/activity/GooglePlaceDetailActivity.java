@@ -1,9 +1,12 @@
 package com.android.foodmark.activity;
 
+import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
 import com.android.foodmark.constants.AppConstants;
+import com.android.foodmark.database.FavoriteExecutor;
 import com.android.foodmark.fragment.GooglePlaceDetailFragment;
 import com.android.foodmark.fragment.GooglePlaceDetailFragment.OnResultLoadedListener;
+import com.android.foodmark.model.GooglePlace;
 import com.android.foodmark.model.GooglePlaceDetail;
 import com.android.foodmark.R;
 
@@ -21,7 +24,9 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
 	private GooglePlaceDetailFragment googlePlaceDetailFragment;
 	
 	private ShareActionProvider mShareActionProvider;
-	
+
+    private GooglePlace mGooglePlace = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -29,8 +34,10 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
 		setContentView(R.layout.activity_place_detail);
 
         googlePlaceDetailFragment = new GooglePlaceDetailFragment();
+        mGooglePlace = (GooglePlace) getIntent().getSerializableExtra("PLACE");
+
 			Bundle bundle = new Bundle();
-			bundle.putString(AppConstants.REFERENCE, getIntent().getStringExtra(AppConstants.REFERENCE));
+			bundle.putString(AppConstants.REFERENCE, mGooglePlace.getReference());
 			googlePlaceDetailFragment.setArguments(bundle);
 			
 			getSupportFragmentManager().beginTransaction().add(R.id.search_detailframe, googlePlaceDetailFragment).commit();
@@ -46,12 +53,55 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
 		
 		// Locate MenuItem with ShareActionProvider
 	    MenuItem item = menu.findItem(R.id.menu_item_share);
-	    
+
 	    // Fetch and store ShareActionProvider
 	    mShareActionProvider = (ShareActionProvider)MenuItemCompat.getActionProvider(item);
-	    
+
+        MenuItem favItem = menu.findItem(R.id.action_bookmark);
+        //check if exist in favorite db
+        boolean isFav = FavoriteExecutor.isFavorite(
+                MainApplication.getAppInstance().getSQLiteInstance(), mGooglePlace);
+        if(isFav)
+        {
+            favItem.setIcon(android.R.drawable.btn_star_big_on);
+        }
+        else
+        {
+            favItem.setIcon(android.R.drawable.btn_star_big_off);
+        }
+        mGooglePlace.setFavorite(isFav);
+
 		return super.onCreateOptionsMenu(menu);
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_bookmark:
+            {
+                if(mGooglePlace.isFavorite())
+                {
+                    mGooglePlace.setFavorite(false);
+                    item.setIcon(android.R.drawable.btn_star_big_off);
+                }
+                else
+                {
+                    // set as favorite
+                    mGooglePlace.setFavorite(true);
+                    item.setIcon(android.R.drawable.btn_star_big_on);
+                }
+                // update the data base
+                FavoriteExecutor.setFavorite(
+                        MainApplication.getAppInstance().getSQLiteInstance(), mGooglePlace);
+                return true;
+            }
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 	
 	/** Defines a default (dummy) share intent to initialize the action provider.
 	  * However, as soon as the actual content to be used in the intent

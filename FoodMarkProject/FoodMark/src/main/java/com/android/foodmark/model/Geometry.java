@@ -1,10 +1,12 @@
 package com.android.foodmark.model;
 
-public class Geometry 
+import java.io.Serializable;
+
+public class Geometry implements Serializable
 {
 	private AppLocation location;
 	
-	public class AppLocation
+	public class AppLocation implements Serializable
 	{
 		private String lat;
 		private String lng;

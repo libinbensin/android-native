@@ -1,9 +1,13 @@
 package com.android.foodmark.database;
 
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.google.android.gms.internal.ca;
+import com.google.android.gms.internal.t;
 
 public class AppSQLiteHelper extends SQLiteOpenHelper
 {
@@ -19,8 +23,19 @@ public class AppSQLiteHelper extends SQLiteOpenHelper
 	@Override
 	public void onCreate(SQLiteDatabase db) 
 	{
-		db.execSQL(FavoriteContract.CREATE_FAVORITE_TABLE);
-		
+        try
+        {
+            String s = FavoriteContract.CREATE_FAVORITE_TABLE;
+		    db.execSQL(s);
+        }
+        catch (SQLException e)
+        {
+            // handle failure
+        }
+        catch (Exception e)
+        {
+            // handle failure
+        }
 	}
 
 	@Override
