@@ -45,6 +45,6 @@ public class BaseModel implements Serializable
 	{
 		this.isValid = isValid;
 	}
-	
-	
+
+
 }
