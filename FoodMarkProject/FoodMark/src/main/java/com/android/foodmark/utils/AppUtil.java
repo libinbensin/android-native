@@ -1,5 +1,6 @@
 package com.android.foodmark.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
 import android.view.animation.ScaleAnimation;
@@ -54,5 +55,27 @@ public final class AppUtil
 		Toast.makeText(MainApplication.getAppInstance().getApplicationContext(), s, Toast.LENGTH_LONG).show();
 	}
 	
-	
+	public static String toString(byte[] bytes)
+    {
+        try {
+            String s = new String(bytes ,"UTF-8");
+            return s;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static byte[] toBytes(String s)
+    {
+        try
+        {
+            return s.getBytes("UTF-8");
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
