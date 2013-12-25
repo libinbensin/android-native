@@ -25,7 +25,7 @@ public final class FavoriteContract
         public static final String COLUMN_RATING = "RATING";
         public static final String COLUMN_REFERENCE = "REFERENCE";
         public static final String COLUMN_IS_FAVORITE = "IS_FAVORITE";
-
+        public static final String COLUMN_ICON_URL = "ICON_URL";
     }
 
     private static final String CREATE_TABLE = "CREATE TABLE";
@@ -47,6 +47,7 @@ public final class FavoriteContract
             COMMA_SEP + FavoriteEntry.COLUMN_VICINITY  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_DISTANCE  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_RATING  + TEXT_TYPE +
+            COMMA_SEP + FavoriteEntry.COLUMN_ICON_URL  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_REFERENCE  + TEXT_TYPE + UNIQUE +
             COMMA_SEP + FavoriteEntry.COLUMN_IS_FAVORITE + INTEGER_TYPE + SPACE +
             CLOSE_BRACKET;
