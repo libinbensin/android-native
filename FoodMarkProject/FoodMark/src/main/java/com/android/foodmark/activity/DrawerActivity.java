@@ -113,7 +113,11 @@ public class DrawerActivity extends BaseActivity
             switch (position)
             {
                 case 0:
+                {
+                    Intent intent = new Intent(DrawerActivity.this, PlaceTabActivity.class);
+                    startActivity(intent);
                     break;
+                }
                 case 1:
                 {
                     Intent intent = new Intent(DrawerActivity.this , AudioListActivity.class);

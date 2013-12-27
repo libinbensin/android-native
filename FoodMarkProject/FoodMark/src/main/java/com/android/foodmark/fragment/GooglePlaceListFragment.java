@@ -1,5 +1,6 @@
 package com.android.foodmark.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import com.android.foodmark.adapter.PlaceListAdapter;
 import com.android.foodmark.callbacks.GooglePlaceCallback;
 import com.android.foodmark.model.GooglePlace;
 import com.android.foodmark.utils.AppUtil;
+import com.google.android.gms.internal.ac;
 
 import java.text.DecimalFormat;
 import java.util.Iterator;
@@ -25,7 +27,8 @@ import java.util.TreeMap;
 public class GooglePlaceListFragment extends ListFragment
 {
 	private PlaceListAdapter placeListAdapter;
-	
+    private String mLaunchType = null;
+
 	@Override
 	public void onActivityCreated(Bundle bundle)
 	{
@@ -33,16 +36,33 @@ public class GooglePlaceListFragment extends ListFragment
 		placeListAdapter = new PlaceListAdapter(getActivity());
 		setListAdapter(placeListAdapter);
 		setListShown(true);
+        mLaunchType = getArguments().getString("TYPE");
+        fetchData(true);
 	}
 
-	public void fetchData(boolean argIsReload)
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+    }
+
+    public void fetchData(String type, boolean argIsReload)
+    {
+        mLaunchType = type;
+        fetchData(argIsReload);
+    }
+
+	private void fetchData(boolean argIsReload)
 	{
 		// show loading
-		((BaseActivity)getActivity()).showLoading();
+        if(argIsReload)
+        {
+		    ((BaseActivity)getActivity()).showLoading();
+        }
 
-        String launchType = MainApplication.getPreferences().getString("TYPE",getResources().getString(R.string.action_restaurant));
+        //String launchType = MainApplication.getPreferences().getString("TYPE",getResources().getString(R.string.action_restaurant));
 		Bundle bundle = new Bundle();
-		bundle.putString("TYPE", AppUtil.toLowerCase(launchType));
+		bundle.putString("TYPE", AppUtil.toLowerCase(mLaunchType));
 		
 		GooglePlaceCallback placeCallback =  new GooglePlaceCallback(getActivity()) 
 		{

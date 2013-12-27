@@ -74,6 +74,12 @@
         <activity android:name=".activity.FavoriteActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
+
+        <activity android:name=".activity.PlaceTabActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
+
     </application>
 
 

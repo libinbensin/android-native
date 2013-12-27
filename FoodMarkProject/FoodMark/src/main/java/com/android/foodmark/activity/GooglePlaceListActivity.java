@@ -52,6 +52,9 @@ public class GooglePlaceListActivity extends DrawerActivity
 
     private LocationClient mLocationClient = null;
 
+    // default type is restaurant
+    private String mLaunchType = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -69,8 +72,14 @@ public class GooglePlaceListActivity extends DrawerActivity
 		{
 			placeListFragment = (GooglePlaceListFragment)
                     getSupportFragmentManager().findFragmentById(R.id.activity_frame);
-            placeListFragment.fetchData(false);
+            placeListFragment.fetchData(mLaunchType, false);
 		}
+        // read the default launch type in prefs
+        mLaunchType = MainApplication.getPreferences().getString(
+                "TYPE",getResources().getString(R.string.action_restaurant));
+        Bundle bundle = new Bundle();
+        bundle.putString("TYPE",mLaunchType);
+        placeListFragment.setArguments(bundle);
     }
 
     @Override
@@ -230,9 +239,11 @@ public class GooglePlaceListActivity extends DrawerActivity
 		if(!argType.equals(MainApplication.getPreferences().getString(
                 AppConstants.TYPE, AppConstants.BLANK)))
 		{
+            // write the selected launch type to prefs
 			MainApplication.getPreferences().edit().putString(AppConstants.TYPE,argType).commit();
-
-			placeListFragment.fetchData(true);
+            // update the launch type
+            mLaunchType =argType;
+			placeListFragment.fetchData(mLaunchType,true);
 		}
 	}
 
@@ -286,7 +297,7 @@ public class GooglePlaceListActivity extends DrawerActivity
 		{
 			MainApplication.getAppInstance().setLocation(searchLocation);
 			// refresh the list
-			placeListFragment.fetchData(true);
+			placeListFragment.fetchData(mLaunchType,true);
 		}
 		else
 		{
@@ -316,7 +327,7 @@ public class GooglePlaceListActivity extends DrawerActivity
             mLocationClient.disconnect();
         }
         // update the UI
-        placeListFragment.fetchData(true);
+        placeListFragment.fetchData(mLaunchType,true);
     }
 
     @Override
@@ -329,7 +340,7 @@ public class GooglePlaceListActivity extends DrawerActivity
     public void onConnectionFailed(ConnectionResult connectionResult)
     {
         // update the UI . Lets retrieve the location from location manager
-        placeListFragment.fetchData(true);
+        placeListFragment.fetchData(mLaunchType,true);
     }
 
 }

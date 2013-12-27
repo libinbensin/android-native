@@ -131,7 +131,8 @@ public class GooglePlaceDetailFragment extends Fragment
 					
 					if(!isImageDownloaded)
 					{
-						downloadImageView.setBackgroundResource(R.drawable.no_image);
+                        MainApplication.getImageDownloader().download(
+                                argGooglePlaceDetail.getIconUrl(),downloadImageView );
 					}
 
 					if(argGooglePlaceDetail.getReviews() != null)
