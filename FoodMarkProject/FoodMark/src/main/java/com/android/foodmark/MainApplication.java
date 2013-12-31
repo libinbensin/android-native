@@ -159,5 +159,7 @@ public class MainApplication extends Application
 	{
 		preferences = getSharedPreferences("private preference", MODE_PRIVATE);
 	}
+
+
 	
 }
