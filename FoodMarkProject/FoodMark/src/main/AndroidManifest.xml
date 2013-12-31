@@ -79,7 +79,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
 
-
+        <service android:name=".services.TimeOutService"></service>
     </application>
 
 

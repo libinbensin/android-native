@@ -2,6 +2,7 @@ package com.android.foodmark.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.location.Location;
@@ -28,6 +29,7 @@ import com.android.foodmark.callbacks.GoogleAutoCompleteCallback.OnLoaderResultL
 import com.android.foodmark.constants.AppConstants;
 import com.android.foodmark.fragment.GooglePlaceListFragment;
 import com.android.foodmark.model.GoogleAutoComplete;
+import com.android.foodmark.services.TimeOutService;
 import com.android.foodmark.utils.AppGeoCoder;
 import com.android.foodmark.utils.AppUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -97,6 +99,9 @@ public class GooglePlaceListActivity extends DrawerActivity
 	@Override
 	protected void onPause()
 	{
+        // start the timeout service
+        Intent intent = new Intent(getApplicationContext(), TimeOutService.class);
+        startService(intent);
 		super.onPause();
 	}
 	
@@ -106,6 +111,12 @@ public class GooglePlaceListActivity extends DrawerActivity
 		super.onResume();
 
 	}
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+    }
 
     private boolean serviceConnected()
     {
