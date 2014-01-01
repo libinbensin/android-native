@@ -13,8 +13,8 @@
         android:orientation="horizontal">
 
         <LinearLayout
-	        android:layout_width="200dp"
-	        android:layout_height="150dp"
+	        android:layout_width="150dp"
+	        android:layout_height="100dp"
 	        android:padding="5dp"
 	        android:orientation="vertical" >
 	        
@@ -68,16 +68,15 @@
 			        android:textStyle="bold"
 			        android:layout_gravity="left|center_horizontal"/>
     		</LinearLayout>
-		    
 		 
     	</LinearLayout>
-    	
-       
-        
     </LinearLayout>
 
+    <include layout="@layout/activity_map_view"></include>
+
+
     <FrameLayout 
-        android:id="@+id/review_detailframe"
+        android:id="@+id/review_detail_frame"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
         android:orientation="vertical">

@@ -3,13 +3,18 @@ package com.android.foodmark.fragment;
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
 import com.android.foodmark.activity.BaseActivity;
+import com.android.foodmark.activity.MapActivity;
+import com.android.foodmark.activity.WebViewActivity;
 import com.android.foodmark.adapter.ReviewAdapter;
 import com.android.foodmark.callbacks.GooglePlaceDetailCallback;
+import com.android.foodmark.constants.AppBundle;
 import com.android.foodmark.constants.ConfigConstants;
+import com.android.foodmark.model.Geometry;
 import com.android.foodmark.model.GooglePlaceDetail;
 import com.android.foodmark.utils.AppUtil;
 
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -135,12 +141,77 @@ public class GooglePlaceDetailFragment extends Fragment
                                 argGooglePlaceDetail.getIconUrl(),downloadImageView );
 					}
 
+                    // display the location map
+                    if(argGooglePlaceDetail.getGeometry()!= null)
+                    {
+                        // update the map fragment
+                        PlaceMapFragment mapFragment = new PlaceMapFragment();
+                        final Geometry geometry = argGooglePlaceDetail.getGeometry();
+                        Bundle mapInfo = new Bundle();
+                        mapInfo.putSerializable(AppBundle.LOCATION,geometry);
+                        mapFragment.setArguments(mapInfo);
+                        getChildFragmentManager().beginTransaction().add(
+                                R.id.map_detail_frame, mapFragment).commit();
+
+                        // button to invoke map detail view
+                        Button detailMap = (Button) getView().findViewById(R.id.map_detail_button);
+                        detailMap.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                synchronized (this)
+                                {
+                                    Intent intent = new Intent(getActivity(), MapActivity.class);
+                                    intent.putExtra(AppBundle.LOCATION,geometry);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+                        final String webUrl = argGooglePlaceDetail.getUrl();
+                        // button to invoke webView to write review
+                        Button writeReview = (Button) getView().findViewById(
+                                R.id.map_write_review_button);
+                        writeReview.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                synchronized (this)
+                                {
+                                    Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                                    intent.putExtra(AppBundle.WEB_URL,webUrl);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+                        Location current = MainApplication.getAppInstance().getLocation();
+                        Geometry.AppLocation dist = geometry.getLocation();
+                        // format direction uri
+                        final String routeUrl = String.format(
+                                ConfigConstants.GOOGLE_MAP_DIRECTION_URL,
+                                current.getLatitude() + "," + current.getLongitude(),
+                                dist.getLat() + "," + dist.getLng());
+
+                        Button invokeMap = (Button) getView().findViewById(
+                                R.id.map_route_button);
+                        invokeMap.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                synchronized (this)
+                                {
+                                    Intent intent = new Intent(
+                                            Intent.ACTION_VIEW,Uri.parse(routeUrl));
+                                    intent.setClassName("com.google.android.apps.maps" ,
+                                            "com.google.android.maps.MapsActivity");
+                                    startActivity(intent);
+                                }
+                            }
+                        });
+                    }
+
 					if(argGooglePlaceDetail.getReviews() != null)
 					{
 						PlaceReviewFragment reviewFragment = new PlaceReviewFragment();
 
 						getChildFragmentManager().beginTransaction().replace(
-                                R.id.review_detailframe, reviewFragment).commit();
+                                R.id.review_detail_frame, reviewFragment).commit();
 
 						// update review list
 						ReviewAdapter reviewListAdapter = new ReviewAdapter(getActivity());
@@ -161,7 +232,7 @@ public class GooglePlaceDetailFragment extends Fragment
                                 getResources().getString(R.string.empty_review_list));
                         emptyFragment.setArguments(bundle);
                         getChildFragmentManager().beginTransaction().replace(
-                                R.id.review_detailframe,emptyFragment).commit();
+                                R.id.review_detail_frame,emptyFragment).commit();
                     }
 					if(mOnResultLoadedListener != null)
 					{

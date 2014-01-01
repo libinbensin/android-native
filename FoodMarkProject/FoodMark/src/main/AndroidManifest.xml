@@ -3,7 +3,7 @@
     android:versionCode="1"
     android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19" />
+    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -29,7 +29,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCwWUXAq7SnC1WYzcKQJ8mRUw-MSpJTkT4"/>
+            android:value="AIzaSyCyQKnruyjIQoNOdcxWEE0lRUm5J9k_FMM"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -77,6 +77,14 @@
 
         <activity android:name=".activity.PlaceTabActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
+        <activity android:name=".activity.MapActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <activity android:name=".activity.WebViewActivity"
+            android:configChanges="orientation|screenSize">
         </activity>
 
         <service android:name=".services.TimeOutService"></service>

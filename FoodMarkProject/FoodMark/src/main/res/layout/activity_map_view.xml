@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@color/White">
+
+
+    <FrameLayout
+        android:id="@+id/map_detail_frame"
+        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="0dp">
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_height="40dp"
+        android:layout_width="fill_parent"
+        android:background="@drawable/border_bg"
+        android:divider="?dividerHorizontal"
+        android:showDividers="middle"
+        android:orientation="horizontal">
+        <Button
+            style="@style/AppButtonMapAction"
+            android:text="@string/map_full_view"
+            android:id="@+id/map_detail_button"
+            android:layout_weight="1"/>
+
+        <Button
+            style="@style/AppButtonMapAction"
+            android:text="@string/map_navigate"
+            android:id="@+id/map_route_button"
+            android:layout_weight="1"/>
+
+        <Button
+            style="@style/AppButtonMapAction"
+            android:text="@string/write_review"
+            android:id="@+id/map_write_review_button"
+            android:layout_weight="1"/>
+
+        </LinearLayout>
+
+</LinearLayout>
