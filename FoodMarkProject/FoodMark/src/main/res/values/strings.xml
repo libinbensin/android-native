@@ -31,6 +31,12 @@
     <string name="alert_call_title">You are leaving the app to make call</string>
     <string name="empty_review_list">No Reviews found.</string>
     <string name="empty_favorite_list">No Favorites marked.</string>
+
+    <string name="map_full_view">View Map</string>
+    <string name="map_navigate">Navigate</string>
+    <string name="write_review">Write Review</string>
+
+
     <string-array name="left_drawer_array">
         <item>Home</item>
         <item>Play Audio</item>

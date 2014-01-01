@@ -19,7 +19,9 @@ public class GooglePlaceDetail extends BaseModel
 	
 	@SerializedName("formatted_phone_number")
 	private String phonenumber;
-	
+
+    private Geometry geometry;
+
 	@SerializedName("icon")
 	private String iconUrl;
 	
@@ -31,6 +33,16 @@ public class GooglePlaceDetail extends BaseModel
 	private List<Photos> photos;
 
     private boolean favorite;
+
+    public Geometry getGeometry()
+    {
+        return geometry;
+    }
+
+    public void setGeometry(Geometry geometry)
+    {
+        this.geometry = geometry;
+    }
 
     public class Photos
 	{
