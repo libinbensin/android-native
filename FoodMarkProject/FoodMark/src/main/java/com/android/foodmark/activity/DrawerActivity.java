@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.android.foodmark.R;
-import com.android.foodmark.constants.AppConstants;
+import com.android.foodmark.constants.AppConstant;
 
 /**
  * Created by libin on 12/21/13.
@@ -133,14 +133,14 @@ public class DrawerActivity extends BaseActivity
                 case 3:
                 {
                     Intent intent = new Intent(DrawerActivity.this,CameraActivity.class);
-                    intent.putExtra("MEDIA_TYPE", AppConstants.MEDIA_TYPE_IMAGE);
+                    intent.putExtra("MEDIA_TYPE", AppConstant.MEDIA_TYPE_IMAGE);
                     startActivity(intent);
                     break;
                 }
                 case 4:
                 {
                     Intent intent = new Intent(DrawerActivity.this,CameraActivity.class);
-                    intent.putExtra("MEDIA_TYPE", AppConstants.MEDIA_TYPE_VIDEO);
+                    intent.putExtra("MEDIA_TYPE", AppConstant.MEDIA_TYPE_VIDEO);
                     startActivity(intent);
                     break;
                 }

@@ -6,11 +6,11 @@ import com.android.foodmark.activity.BaseActivity;
 import com.android.foodmark.activity.MapActivity;
 import com.android.foodmark.activity.WebViewActivity;
 import com.android.foodmark.adapter.ReviewAdapter;
-import com.android.foodmark.callbacks.GooglePlaceDetailCallback;
+import com.android.foodmark.callbacks.PlaceDetailCallback;
 import com.android.foodmark.constants.AppBundle;
-import com.android.foodmark.constants.ConfigConstants;
+import com.android.foodmark.constants.AppConfig;
 import com.android.foodmark.model.Geometry;
-import com.android.foodmark.model.GooglePlaceDetail;
+import com.android.foodmark.model.PlaceDetail;
 import com.android.foodmark.utils.AppUtil;
 
 import android.content.Intent;
@@ -27,11 +27,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class GooglePlaceDetailFragment extends Fragment
+public class PlaceDetailFragment extends Fragment
 {
 	private OnResultLoadedListener mOnResultLoadedListener = null;
 	
-	public GooglePlaceDetailFragment() 
+	public PlaceDetailFragment()
 	{
 	}
 
@@ -63,26 +63,26 @@ public class GooglePlaceDetailFragment extends Fragment
 		Bundle bundle = new Bundle();
 		bundle.putString("REFERENCE", argReference);
 		
-		getLoaderManager().initLoader(2, bundle, new GooglePlaceDetailCallback(getActivity()) 
+		getLoaderManager().initLoader(2, bundle, new PlaceDetailCallback(getActivity())
 		{
 			
 			@Override
-			protected void onLoaderResult(GooglePlaceDetail argGooglePlaceDetail) 
+			protected void onLoaderResult(PlaceDetail argPlaceDetail)
 			{
-				if(argGooglePlaceDetail != null)
+				if(argPlaceDetail != null)
 				{
-					if(argGooglePlaceDetail.getName() != null)
+					if(argPlaceDetail.getName() != null)
 					{
-						((TextView)getView().findViewById(R.id.place_name)).setText(argGooglePlaceDetail.getName());
+						((TextView)getView().findViewById(R.id.place_name)).setText(argPlaceDetail.getName());
 					}
-					if(argGooglePlaceDetail.getAddress() != null)
+					if(argPlaceDetail.getAddress() != null)
 					{
-						((TextView)getView().findViewById(R.id.place_address)).setText(argGooglePlaceDetail.getAddress());
+						((TextView)getView().findViewById(R.id.place_address)).setText(argPlaceDetail.getAddress());
 					}
-					if(argGooglePlaceDetail.getPhonenumber() != null)
+					if(argPlaceDetail.getPhonenumber() != null)
 					{
 						TextView phoneTextView = ((TextView)getView().findViewById(R.id.phone_number));
-						final String phoneNumber = argGooglePlaceDetail.getPhonenumber();
+						final String phoneNumber = argPlaceDetail.getPhonenumber();
 						phoneTextView.setText(phoneNumber);
 						ImageView phoneIcon = (ImageView) getView().findViewById(R.id.phone_icon);
 						phoneIcon.setImageDrawable(getResources().getDrawable(R.drawable.phone_contact));
@@ -119,11 +119,11 @@ public class GooglePlaceDetailFragment extends Fragment
 					ImageView downloadImageView = (ImageView)getView().findViewById(R.id.place_icon);
 					// set animation
 					AppUtil.setImageAnimation(downloadImageView);
-					if(argGooglePlaceDetail.getPhotos() != null && argGooglePlaceDetail.getPhotos().size() > 0)
+					if(argPlaceDetail.getPhotos() != null && argPlaceDetail.getPhotos().size() > 0)
 					{
 						// TODO - need to find the best resolution based on the device 
-						GooglePlaceDetail.Photos photo = argGooglePlaceDetail.getPhotos().get(0); 
-						final String photoUrl = String.format(ConfigConstants.GOOGLE_PLACE_PHOTO_URL, photo.getWidth(),photo.getHeight(),photo.getReference(),MainApplication.getAppInstance().getGoogleApiKey());
+						PlaceDetail.Photos photo = argPlaceDetail.getPhotos().get(0);
+						final String photoUrl = String.format(AppConfig.GOOGLE_PLACE_PHOTO_URL, photo.getWidth(),photo.getHeight(),photo.getReference(),MainApplication.getAppInstance().getGoogleApiKey());
 						try
 						{
 							MainApplication.getImageDownloader().download(photoUrl,downloadImageView );
@@ -138,15 +138,15 @@ public class GooglePlaceDetailFragment extends Fragment
 					if(!isImageDownloaded)
 					{
                         MainApplication.getImageDownloader().download(
-                                argGooglePlaceDetail.getIconUrl(),downloadImageView );
+                                argPlaceDetail.getIconUrl(),downloadImageView );
 					}
 
                     // display the location map
-                    if(argGooglePlaceDetail.getGeometry()!= null)
+                    if(argPlaceDetail.getGeometry()!= null)
                     {
                         // update the map fragment
                         PlaceMapFragment mapFragment = new PlaceMapFragment();
-                        final Geometry geometry = argGooglePlaceDetail.getGeometry();
+                        final Geometry geometry = argPlaceDetail.getGeometry();
                         Bundle mapInfo = new Bundle();
                         mapInfo.putSerializable(AppBundle.LOCATION,geometry);
                         mapFragment.setArguments(mapInfo);
@@ -166,7 +166,7 @@ public class GooglePlaceDetailFragment extends Fragment
                                 }
                             }
                         });
-                        final String webUrl = argGooglePlaceDetail.getUrl();
+                        final String webUrl = argPlaceDetail.getUrl();
                         // button to invoke webView to write review
                         Button writeReview = (Button) getView().findViewById(
                                 R.id.map_write_review_button);
@@ -185,7 +185,7 @@ public class GooglePlaceDetailFragment extends Fragment
                         Geometry.AppLocation dist = geometry.getLocation();
                         // format direction uri
                         final String routeUrl = String.format(
-                                ConfigConstants.GOOGLE_MAP_DIRECTION_URL,
+                                AppConfig.GOOGLE_MAP_DIRECTION_URL,
                                 current.getLatitude() + "," + current.getLongitude(),
                                 dist.getLat() + "," + dist.getLng());
 
@@ -206,7 +206,7 @@ public class GooglePlaceDetailFragment extends Fragment
                         });
                     }
 
-					if(argGooglePlaceDetail.getReviews() != null)
+					if(argPlaceDetail.getReviews() != null)
 					{
 						PlaceReviewFragment reviewFragment = new PlaceReviewFragment();
 
@@ -216,7 +216,7 @@ public class GooglePlaceDetailFragment extends Fragment
 						// update review list
 						ReviewAdapter reviewListAdapter = new ReviewAdapter(getActivity());
 
-						for(GooglePlaceDetail.Reviews review: argGooglePlaceDetail.getReviews())
+						for(PlaceDetail.Reviews review: argPlaceDetail.getReviews())
 						{
 							reviewListAdapter.add(review);
 						}
@@ -236,7 +236,7 @@ public class GooglePlaceDetailFragment extends Fragment
                     }
 					if(mOnResultLoadedListener != null)
 					{
-						mOnResultLoadedListener.onResultData(argGooglePlaceDetail);
+						mOnResultLoadedListener.onResultData(argPlaceDetail);
 					}
 				}
 				
@@ -248,7 +248,7 @@ public class GooglePlaceDetailFragment extends Fragment
 	
 	public interface OnResultLoadedListener
 	{
-		public void onResultData(GooglePlaceDetail argDetail);
+		public void onResultData(PlaceDetail argDetail);
 	}
 	
 	public void setOnResultLoadedListener(OnResultLoadedListener listener)

@@ -9,10 +9,10 @@ import android.widget.ListView;
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
 import com.android.foodmark.activity.BaseActivity;
-import com.android.foodmark.activity.GooglePlaceDetailActivity;
+import com.android.foodmark.activity.PlaceDetailActivity;
 import com.android.foodmark.adapter.PlaceListAdapter;
 import com.android.foodmark.database.FavoriteExecutor;
-import com.android.foodmark.model.GooglePlace;
+import com.android.foodmark.model.PlaceList;
 
 import java.util.Iterator;
 import java.util.SortedMap;
@@ -33,7 +33,7 @@ public class FavoriteListFragment extends ListFragment
     public void fetchData()
     {
         // check if available in database
-        SortedMap<Double , GooglePlace> dbPlaceMap  =
+        SortedMap<Double , PlaceList> dbPlaceMap  =
                 FavoriteExecutor.getAll(MainApplication.getAppInstance().getSQLiteInstance());
 
         if(dbPlaceMap != null && dbPlaceMap.size() >0)
@@ -63,11 +63,11 @@ public class FavoriteListFragment extends ListFragment
     @Override
     public void onListItemClick (ListView l, View v, int position, long id)
     {
-        GooglePlace googlePlace = placeListAdapter.getItem(position);
-        String selectedRef =  googlePlace.getReference();
+        PlaceList placeList = placeListAdapter.getItem(position);
+        String selectedRef =  placeList.getReference();
 
-        Intent intent = new Intent(getActivity(), GooglePlaceDetailActivity.class);
-        intent.putExtra("PLACE",googlePlace);
+        Intent intent = new Intent(getActivity(), PlaceDetailActivity.class);
+        intent.putExtra("PLACE", placeList);
         startActivity(intent);
     }
 }

@@ -2,7 +2,7 @@ package com.android.foodmark.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GooglePlace extends BaseModel
+public class PlaceList extends BaseModel
 {
 
 	/**

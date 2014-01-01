@@ -1,6 +1,6 @@
 package com.android.foodmark.constants;
 
-public final class ConfigConstants 
+public final class AppConfig
 {
     public final static String GOOGLE_MAP_DIRECTION_URL = "http://maps.google.com/maps?saddr=%s&daddr=%s";
 

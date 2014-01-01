@@ -6,8 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar.Tab;
 
-import com.android.foodmark.fragment.EmptyFragment;
-import com.android.foodmark.listener.TabListener;
+import com.android.foodmark.listener.BaseTabListener;
 
 /**
  * Created by libin on 12/26/13.
@@ -38,7 +37,7 @@ public class BaseTabActivity extends BaseActivity
         // set tab icon
         if(icon >0) tab.setIcon(icon);
         // set tab listener
-        tab.setTabListener(new TabListener(this, title, cls));
+        tab.setTabListener(new BaseTabListener(this, title, cls));
         getSupportActionBar().addTab(tab);
     }
 

@@ -11,12 +11,11 @@ import android.widget.ListView;
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
 import com.android.foodmark.activity.BaseActivity;
-import com.android.foodmark.activity.GooglePlaceDetailActivity;
+import com.android.foodmark.activity.PlaceDetailActivity;
 import com.android.foodmark.adapter.PlaceListAdapter;
-import com.android.foodmark.callbacks.GooglePlaceCallback;
-import com.android.foodmark.model.GooglePlace;
+import com.android.foodmark.callbacks.PlaceCallback;
+import com.android.foodmark.model.PlaceList;
 import com.android.foodmark.utils.AppUtil;
-import com.google.android.gms.internal.ac;
 
 import java.text.DecimalFormat;
 import java.util.Iterator;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class GooglePlaceListFragment extends ListFragment
+public class PlaceListFragment extends ListFragment
 {
 	private PlaceListAdapter placeListAdapter;
     private String mLaunchType = null;
@@ -64,20 +63,20 @@ public class GooglePlaceListFragment extends ListFragment
 		Bundle bundle = new Bundle();
 		bundle.putString("TYPE", AppUtil.toLowerCase(mLaunchType));
 		
-		GooglePlaceCallback placeCallback =  new GooglePlaceCallback(getActivity()) 
+		PlaceCallback placeCallback =  new PlaceCallback(getActivity())
 		{
 			@Override
-			protected void onLoaderResult(List<GooglePlace> argGooglePlace)
+			protected void onLoaderResult(List<PlaceList> argGooglePlace)
 			{
 
 				placeListAdapter.clear();
 
 				if(argGooglePlace != null && argGooglePlace.size() > 0)
 				{
-                    SortedMap<Double , GooglePlace> placeMap = new TreeMap<Double, GooglePlace>();
+                    SortedMap<Double , PlaceList> placeMap = new TreeMap<Double, PlaceList>();
 
 
-					for(GooglePlace googlePlace : argGooglePlace)
+					for(PlaceList googlePlace : argGooglePlace)
 					{
 						String dis = getDistance(googlePlace);
 						if(AppUtil.hasValue(dis))
@@ -88,7 +87,7 @@ public class GooglePlaceListFragment extends ListFragment
 					}
 
 					// iterate through the map
-                    /*for(Map.Entry<Double,GooglePlace> placeEntry : placeMap.entrySet())
+                    /*for(Map.Entry<Double,PlaceList> placeEntry : placeMap.entrySet())
                     {
                         placeListAdapter.add(placeEntry.getValue());
                     }*/
@@ -122,11 +121,11 @@ public class GooglePlaceListFragment extends ListFragment
 	@Override
 	public void onListItemClick (ListView l, View v, int position, long id)
 	{
-		GooglePlace googlePlace = placeListAdapter.getItem(position);
-		String selectedRef =  googlePlace.getReference();
+		PlaceList placeList = placeListAdapter.getItem(position);
+		String selectedRef =  placeList.getReference();
 		
-		Intent intent = new Intent(getActivity(), GooglePlaceDetailActivity.class);
-        intent.putExtra("PLACE",googlePlace);
+		Intent intent = new Intent(getActivity(), PlaceDetailActivity.class);
+        intent.putExtra("PLACE", placeList);
 		startActivity(intent);
 	}
 	
@@ -134,7 +133,7 @@ public class GooglePlaceListFragment extends ListFragment
 	 * method to calculate distance from current selected location
 	 * 
 	 */
-	private String getDistance(GooglePlace place) 
+	private String getDistance(PlaceList place)
 	{
 		Double toLat = Double.valueOf(place.getGeometry().getLocation().getLat());
 		Double toLng = Double.valueOf(place.getGeometry().getLocation().getLng());

@@ -3,7 +3,7 @@ package com.android.foodmark.utils;
 import java.io.IOException;
 import java.util.List;
 
-import com.android.foodmark.constants.AppConstants;
+import com.android.foodmark.constants.AppConstant;
 
 import android.content.Context;
 import android.location.Address;
@@ -17,7 +17,7 @@ public class AppGeoCoder
 	{
 		Geocoder geocoder = new Geocoder(context);
 		List<Address> addresses = null;
-		Location location = new Location(AppConstants.BLANK);
+		Location location = new Location(AppConstant.BLANK);
 		
 		try 
 		{

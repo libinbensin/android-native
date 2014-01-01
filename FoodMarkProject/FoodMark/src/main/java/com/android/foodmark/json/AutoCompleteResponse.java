@@ -2,13 +2,13 @@ package com.android.foodmark.json;
 
 import java.util.List;
 
-import com.android.foodmark.model.GoogleAutoComplete;
+import com.android.foodmark.model.AutoComplete;
 import com.google.gson.annotations.SerializedName;
 
-public class GoogleAutoCompleteResponse 
+public class AutoCompleteResponse
 {
 	@SerializedName("predictions")
-	private List<GoogleAutoComplete> googleAutoSearchList;
+	private List<AutoComplete> googleAutoSearchList;
 	
 	private String status;
 	
@@ -22,12 +22,12 @@ public class GoogleAutoCompleteResponse
 		this.status = status;
 	}
 
-	public List<GoogleAutoComplete> getGoogleAutoSearchList() 
+	public List<AutoComplete> getGoogleAutoSearchList()
 	{
 		return googleAutoSearchList;
 	}
 
-	public void setGoogleAutoSearchList(List<GoogleAutoComplete> googleAutoSearchs) 
+	public void setGoogleAutoSearchList(List<AutoComplete> googleAutoSearchs)
 	{
 		this.googleAutoSearchList = googleAutoSearchs;
 	}

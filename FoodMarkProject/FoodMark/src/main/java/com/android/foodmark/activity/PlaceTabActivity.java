@@ -8,8 +8,8 @@ import android.support.v7.app.ActionBar;
 
 import com.android.foodmark.R;
 import com.android.foodmark.adapter.PagerAdapter;
-import com.android.foodmark.fragment.GooglePlaceListFragment;
-import com.android.foodmark.listener.SwipeTabListener;
+import com.android.foodmark.fragment.PlaceListFragment;
+import com.android.foodmark.listener.SwipeBaseTabListener;
 
 /**
  * Created by libin_000 on 12/26/13.
@@ -33,13 +33,13 @@ public class PlaceTabActivity extends BaseTabActivity
         Bundle bundle = new Bundle();
 
         bundle.putString("TITLE","gym" );
-        addTab(bundle, GooglePlaceListFragment.class);
+        addTab(bundle, PlaceListFragment.class);
 
         bundle.putString("TITLE", "health");
-        addTab(bundle, GooglePlaceListFragment.class);
+        addTab(bundle, PlaceListFragment.class);
 
         bundle.putString("TITLE", "spa");
-        addTab(bundle, GooglePlaceListFragment.class);
+        addTab(bundle, PlaceListFragment.class);
 
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -74,7 +74,7 @@ public class PlaceTabActivity extends BaseTabActivity
         // set tab icon
         if(icon >0) tab.setIcon(icon);
         // set tab listener
-        tab.setTabListener(new SwipeTabListener(this,mViewPager, title, cls));
+        tab.setTabListener(new SwipeBaseTabListener(this,mViewPager, title, cls));
         getSupportActionBar().addTab(tab);
     }
 

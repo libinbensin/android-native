@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.android.foodmark.R;
-import com.android.foodmark.constants.AppConstants;
+import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.widgets.CameraPreview;
 
 import java.io.File;
@@ -80,12 +80,12 @@ public class CameraActivity extends BaseActivity implements Camera.PictureCallba
         String timeStamp  = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile;
 
-        if(type == AppConstants.MEDIA_TYPE_IMAGE)
+        if(type == AppConstant.MEDIA_TYPE_IMAGE)
         {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator
                 + "IMG_" + timeStamp + ".jpg");
         }
-        else if(type == AppConstants.MEDIA_TYPE_VIDEO)
+        else if(type == AppConstant.MEDIA_TYPE_VIDEO)
         {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator
                 + "VID_" + timeStamp + ".mp4");
@@ -135,7 +135,7 @@ public class CameraActivity extends BaseActivity implements Camera.PictureCallba
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.action_camera, menu);
         this.mMenu = menu;
-        if(mediaCaptureType == AppConstants.MEDIA_TYPE_VIDEO)
+        if(mediaCaptureType == AppConstant.MEDIA_TYPE_VIDEO)
         {
             setCaptureMenuText(getResources().getString(R.string.camera_start));
         }
@@ -148,7 +148,7 @@ public class CameraActivity extends BaseActivity implements Camera.PictureCallba
         switch (item.getItemId())
         {
             case R.id.menu_capture:
-                if(mediaCaptureType == AppConstants.MEDIA_TYPE_IMAGE)
+                if(mediaCaptureType == AppConstant.MEDIA_TYPE_IMAGE)
                 {
                     mCameraPreview.takePicture(this);
                 }
@@ -243,7 +243,7 @@ public class CameraActivity extends BaseActivity implements Camera.PictureCallba
 
         mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
 
-        mMediaRecorder.setOutputFile(getOutputMediaFile(AppConstants.MEDIA_TYPE_VIDEO).toString());
+        mMediaRecorder.setOutputFile(getOutputMediaFile(AppConstant.MEDIA_TYPE_VIDEO).toString());
         mMediaRecorder.setPreviewDisplay(mCameraPreview.getHolder().getSurface());
 
         try
