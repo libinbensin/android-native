@@ -1,7 +1,6 @@
 package com.android.foodmark.activity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -9,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.foodmark.R;
-import com.android.foodmark.constants.AppConstants;
 
 public class BaseActivity extends ActionBarActivity
 {

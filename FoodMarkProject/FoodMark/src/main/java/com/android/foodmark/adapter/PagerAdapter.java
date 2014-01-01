@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.android.foodmark.fragment.GooglePlaceListFragment;
+import com.android.foodmark.fragment.PlaceListFragment;
 
 /**
  * Created by libin on 12/26/13.
@@ -22,7 +22,7 @@ public class PagerAdapter extends FragmentPagerAdapter
     public Fragment getItem(int position)
     {
         Bundle bundle = new Bundle();
-        GooglePlaceListFragment placeListFragment = new GooglePlaceListFragment();
+        PlaceListFragment placeListFragment = new PlaceListFragment();
         switch (position)
         {
             case 0:

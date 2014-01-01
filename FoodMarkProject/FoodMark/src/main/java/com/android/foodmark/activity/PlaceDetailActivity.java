@@ -2,13 +2,12 @@ package com.android.foodmark.activity;
 
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
-import com.android.foodmark.constants.AppConstants;
+import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.database.FavoriteExecutor;
-import com.android.foodmark.fragment.GooglePlaceDetailFragment;
-import com.android.foodmark.fragment.GooglePlaceDetailFragment.OnResultLoadedListener;
-import com.android.foodmark.model.GooglePlace;
-import com.android.foodmark.model.GooglePlaceDetail;
-import com.android.foodmark.R;
+import com.android.foodmark.fragment.PlaceDetailFragment;
+import com.android.foodmark.fragment.PlaceDetailFragment.OnResultLoadedListener;
+import com.android.foodmark.model.PlaceList;
+import com.android.foodmark.model.PlaceDetail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,14 +17,14 @@ import android.support.v7.widget.ShareActionProvider.OnShareTargetSelectedListen
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class GooglePlaceDetailActivity extends BaseActivity implements OnResultLoadedListener
+public class PlaceDetailActivity extends BaseActivity implements OnResultLoadedListener
 {
 
-	private GooglePlaceDetailFragment googlePlaceDetailFragment;
+	private PlaceDetailFragment googlePlaceDetailFragment;
 	
 	private ShareActionProvider mShareActionProvider;
 
-    private GooglePlace mGooglePlace = null;
+    private PlaceList mPlaceList = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -33,11 +32,11 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_place_detail);
 
-        googlePlaceDetailFragment = new GooglePlaceDetailFragment();
-        mGooglePlace = (GooglePlace) getIntent().getSerializableExtra("PLACE");
+        googlePlaceDetailFragment = new PlaceDetailFragment();
+        mPlaceList = (PlaceList) getIntent().getSerializableExtra("PLACE");
 
 			Bundle bundle = new Bundle();
-			bundle.putString(AppConstants.REFERENCE, mGooglePlace.getReference());
+			bundle.putString(AppConstant.REFERENCE, mPlaceList.getReference());
 			googlePlaceDetailFragment.setArguments(bundle);
 			
 			getSupportFragmentManager().beginTransaction().add(R.id.search_detailframe, googlePlaceDetailFragment).commit();
@@ -60,7 +59,7 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
         MenuItem favItem = menu.findItem(R.id.action_bookmark);
         //check if exist in favorite db
         boolean isFav = FavoriteExecutor.isFavorite(
-                MainApplication.getAppInstance().getSQLiteInstance(), mGooglePlace);
+                MainApplication.getAppInstance().getSQLiteInstance(), mPlaceList);
         if(isFav)
         {
             favItem.setIcon(android.R.drawable.btn_star_big_on);
@@ -69,7 +68,7 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
         {
             favItem.setIcon(android.R.drawable.btn_star_big_off);
         }
-        mGooglePlace.setFavorite(isFav);
+        mPlaceList.setFavorite(isFav);
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -81,20 +80,20 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
         {
             case R.id.action_bookmark:
             {
-                if(mGooglePlace.isFavorite())
+                if(mPlaceList.isFavorite())
                 {
-                    mGooglePlace.setFavorite(false);
+                    mPlaceList.setFavorite(false);
                     item.setIcon(android.R.drawable.btn_star_big_off);
                 }
                 else
                 {
                     // set as favorite
-                    mGooglePlace.setFavorite(true);
+                    mPlaceList.setFavorite(true);
                     item.setIcon(android.R.drawable.btn_star_big_on);
                 }
                 // update the data base
                 FavoriteExecutor.setFavorite(
-                        MainApplication.getAppInstance().getSQLiteInstance(), mGooglePlace);
+                        MainApplication.getAppInstance().getSQLiteInstance(), mPlaceList);
                 return true;
             }
             default:
@@ -108,7 +107,7 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
 	  * is known or changes, you must update the share intent by again calling
 	  * mShareActionProvider.setShareIntent()
 	  */
-	private Intent getDefaultIntent(GooglePlaceDetail argDetail) 
+	private Intent getDefaultIntent(PlaceDetail argDetail)
 	{
 		StringBuilder stringBuilder = new StringBuilder();
 		
@@ -141,7 +140,7 @@ public class GooglePlaceDetailActivity extends BaseActivity implements OnResultL
 	}
 
 	@Override
-	public void onResultData(GooglePlaceDetail argDetail) 
+	public void onResultData(PlaceDetail argDetail)
 	{
 		if(mShareActionProvider != null)
 		{

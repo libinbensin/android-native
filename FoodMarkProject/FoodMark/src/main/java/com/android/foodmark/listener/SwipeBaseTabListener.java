@@ -9,12 +9,12 @@ import android.support.v7.app.ActionBar;
 /**
  * Created by libin on 12/26/13.
  */
-public class SwipeTabListener extends TabListener
+public class SwipeBaseTabListener extends BaseTabListener
 {
     private final ViewPager mViewPager;
 
-    public SwipeTabListener(Activity activity,ViewPager viewPager,
-                            String tag, Class<? extends Fragment> tClass)
+    public SwipeBaseTabListener(Activity activity, ViewPager viewPager,
+                                String tag, Class<? extends Fragment> tClass)
     {
         super(activity, tag, tClass);
         mViewPager = viewPager;

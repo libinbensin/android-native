@@ -5,12 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.android.foodmark.MainApplication;
-import com.android.foodmark.constants.AppConstants;
 import com.android.foodmark.database.FavoriteContract.FavoriteEntry;
-import com.android.foodmark.model.GooglePlace;
+import com.android.foodmark.model.PlaceList;
 import com.android.foodmark.security.AppSecurity;
 import com.android.foodmark.utils.AppUtil;
-import com.google.android.gms.internal.by;
 
 import java.util.List;
 import java.util.SortedMap;
@@ -26,43 +24,43 @@ public final class FavoriteExecutor
 
     }
 
-    public static long add(SQLiteDatabase db, GooglePlace googlePlace)
+    public static long add(SQLiteDatabase db, PlaceList placeList)
     {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(FavoriteEntry.COLUMN_TITLE, encryptedByte(googlePlace.getDescription()));
-        contentValues.put(FavoriteEntry.COLUMN_VICINITY, googlePlace.getVicinity());
-        contentValues.put(FavoriteEntry.COLUMN_DISTANCE, googlePlace.getDistance());
-        contentValues.put(FavoriteEntry.COLUMN_RATING, googlePlace.getRating());
-        contentValues.put(FavoriteEntry.COLUMN_REFERENCE, googlePlace.getReference());
-        contentValues.put(FavoriteEntry.COLUMN_IS_FAVORITE ,googlePlace.isFavorite() ? 1 : 0);
-        contentValues.put(FavoriteEntry.COLUMN_ICON_URL , googlePlace.getIcon());
+        contentValues.put(FavoriteEntry.COLUMN_TITLE, encryptedByte(placeList.getDescription()));
+        contentValues.put(FavoriteEntry.COLUMN_VICINITY, placeList.getVicinity());
+        contentValues.put(FavoriteEntry.COLUMN_DISTANCE, placeList.getDistance());
+        contentValues.put(FavoriteEntry.COLUMN_RATING, placeList.getRating());
+        contentValues.put(FavoriteEntry.COLUMN_REFERENCE, placeList.getReference());
+        contentValues.put(FavoriteEntry.COLUMN_IS_FAVORITE , placeList.isFavorite() ? 1 : 0);
+        contentValues.put(FavoriteEntry.COLUMN_ICON_URL , placeList.getIcon());
 
        return db.insert(FavoriteContract.FavoriteEntry.TABLE_NAME , null , contentValues);
     }
 
-    public static void update(SQLiteDatabase db, GooglePlace googlePlace)
+    public static void update(SQLiteDatabase db, PlaceList placeList)
     {
         ContentValues contentValues = new ContentValues();
         String whereClause = FavoriteEntry.COLUMN_REFERENCE + "= ? ";
-        String[] whereArgs = new String[]{googlePlace.getReference()};
+        String[] whereArgs = new String[]{placeList.getReference()};
 
-        contentValues.put(FavoriteEntry.COLUMN_IS_FAVORITE ,googlePlace.isFavorite() ? 1 : 0);
+        contentValues.put(FavoriteEntry.COLUMN_IS_FAVORITE , placeList.isFavorite() ? 1 : 0);
 
         db.update(FavoriteEntry.TABLE_NAME ,contentValues,whereClause,whereArgs);
     }
 
-    public static void remove(SQLiteDatabase db, GooglePlace googlePlace)
+    public static void remove(SQLiteDatabase db, PlaceList placeList)
     {
         String whereClause = FavoriteEntry.COLUMN_REFERENCE + "= ? ";
-        String[] whereArgs = new String[]{googlePlace.getReference()};
+        String[] whereArgs = new String[]{placeList.getReference()};
 
         db.delete(FavoriteContract.FavoriteEntry.TABLE_NAME, whereClause, whereArgs);
     }
 
-    public static SortedMap<Double,GooglePlace> getAll(SQLiteDatabase db)
+    public static SortedMap<Double,PlaceList> getAll(SQLiteDatabase db)
     {
-        SortedMap<Double,GooglePlace> placeHashMap = new TreeMap<Double,GooglePlace>();
+        SortedMap<Double,PlaceList> placeHashMap = new TreeMap<Double,PlaceList>();
         String[] queryList = {
                 FavoriteEntry.COLUMN_TITLE ,
                 FavoriteEntry.COLUMN_VICINITY ,
@@ -78,25 +76,25 @@ public final class FavoriteExecutor
         {
             do
             {
-                GooglePlace googlePlace = new GooglePlace();
+                PlaceList placeList = new PlaceList();
                 int index = 0;
 
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_TITLE);
-                googlePlace.setDescription(decryptedString(cursor.getBlob(index)));
+                placeList.setDescription(decryptedString(cursor.getBlob(index)));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_VICINITY);
-                googlePlace.setVicinity(cursor.getString(index));
+                placeList.setVicinity(cursor.getString(index));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_DISTANCE);
-                googlePlace.setDistance(cursor.getString(index));
+                placeList.setDistance(cursor.getString(index));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_RATING);
-                googlePlace.setRating(cursor.getString(index));
+                placeList.setRating(cursor.getString(index));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_REFERENCE);
-                googlePlace.setReference(cursor.getString(index));
+                placeList.setReference(cursor.getString(index));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_IS_FAVORITE);
-                googlePlace.setFavorite( (cursor.getInt(index) == 1 ) ? true : false);
+                placeList.setFavorite( (cursor.getInt(index) == 1 ) ? true : false);
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_ICON_URL);
-                googlePlace.setIcon(cursor.getString(index));
+                placeList.setIcon(cursor.getString(index));
 
-                placeHashMap.put(Double.valueOf(googlePlace.getDistance()),googlePlace);
+                placeHashMap.put(Double.valueOf(placeList.getDistance()), placeList);
             }
             while (cursor.moveToNext());
 
@@ -108,15 +106,15 @@ public final class FavoriteExecutor
         return placeHashMap;
     }
 
-    private static void addAll(SQLiteDatabase db , List<GooglePlace> argGooglePlace) {
+    private static void addAll(SQLiteDatabase db , List<PlaceList> argPlaceList) {
 
-        for(GooglePlace googlePlace : argGooglePlace)
+        for(PlaceList placeList : argPlaceList)
         {
-            add(db,googlePlace);
+            add(db, placeList);
         }
     }
 
-    public static boolean isFavorite(SQLiteDatabase db , GooglePlace googlePlace)
+    public static boolean isFavorite(SQLiteDatabase db , PlaceList placeList)
     {
         String[] selectionArgs = new String[]{FavoriteEntry._ID,FavoriteEntry.COLUMN_REFERENCE};
 
@@ -125,7 +123,7 @@ public final class FavoriteExecutor
                 FavoriteEntry.TABLE_NAME,
                 selectionArgs,
                 FavoriteEntry.COLUMN_REFERENCE + " = '" +
-                googlePlace.getReference()+"'",
+                placeList.getReference()+"'",
                 null,null,null,null);
 
         if(cursor != null && cursor.getCount() > 0)
@@ -138,30 +136,30 @@ public final class FavoriteExecutor
         }
     }
 
-    public static void setFavorite(SQLiteDatabase db , GooglePlace googlePlace)
+    public static void setFavorite(SQLiteDatabase db , PlaceList placeList)
     {
         boolean exists = false;
 
         // check if row exists
-        if(isFavorite(db,googlePlace))
+        if(isFavorite(db, placeList))
         {
             exists = true;
         }
 
         if(exists)
         {
-            if(googlePlace.isFavorite())
+            if(placeList.isFavorite())
             {
-                update(db,googlePlace);
+                update(db, placeList);
             }
             else
             {
-                remove(db,googlePlace);
+                remove(db, placeList);
             }
         }
         else
         {
-            add(db,googlePlace);
+            add(db, placeList);
         }
     }
 

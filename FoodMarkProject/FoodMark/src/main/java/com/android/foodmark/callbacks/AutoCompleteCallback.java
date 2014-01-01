@@ -10,40 +10,40 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 
-import com.android.foodmark.json.GoogleAutoCompleteResponse;
-import com.android.foodmark.loader.GoogleAutoCompleteLoader;
+import com.android.foodmark.json.AutoCompleteResponse;
+import com.android.foodmark.loader.AutoCompleteLoader;
 import com.android.foodmark.loader.LoaderResultOrException;
-import com.android.foodmark.model.GoogleAutoComplete;
+import com.android.foodmark.model.AutoComplete;
 
 /**
  * @author Libin_Salal
  *
  */
-public class GoogleAutoCompleteCallback implements LoaderCallbacks<LoaderResultOrException<GoogleAutoCompleteResponse, Exception>>
+public class AutoCompleteCallback implements LoaderCallbacks<LoaderResultOrException<AutoCompleteResponse, Exception>>
 {
 	private Context mContext = null;
 	
 	private OnLoaderResultListener loaderResultListener;
 	
-	public GoogleAutoCompleteCallback(final Context argContext) 
+	public AutoCompleteCallback(final Context argContext)
 	{
 		mContext = argContext;
 	}
 	
 	@Override
-	public Loader<LoaderResultOrException<GoogleAutoCompleteResponse, Exception>> onCreateLoader(
+	public Loader<LoaderResultOrException<AutoCompleteResponse, Exception>> onCreateLoader(
 			int arg0, Bundle bundle) 
 	{
-		return new GoogleAutoCompleteLoader(mContext,bundle);
+		return new AutoCompleteLoader(mContext,bundle);
 	}
 
 	@Override
 	public void onLoadFinished(
-			Loader<LoaderResultOrException<GoogleAutoCompleteResponse, Exception>> argLoader,
-			LoaderResultOrException<GoogleAutoCompleteResponse, Exception> argResult) {
+			Loader<LoaderResultOrException<AutoCompleteResponse, Exception>> argLoader,
+			LoaderResultOrException<AutoCompleteResponse, Exception> argResult) {
 		
-		GoogleAutoCompleteResponse autoCompleteResponse = null;
-		List<GoogleAutoComplete> autoCompletes = null;
+		AutoCompleteResponse autoCompleteResponse = null;
+		List<AutoComplete> autoCompletes = null;
 		
 		if( argResult != null && argResult.hasResult())
 		{
@@ -60,14 +60,14 @@ public class GoogleAutoCompleteCallback implements LoaderCallbacks<LoaderResultO
 
 	@Override
 	public void onLoaderReset(
-			Loader<LoaderResultOrException<GoogleAutoCompleteResponse, Exception>> argLoader) 
+			Loader<LoaderResultOrException<AutoCompleteResponse, Exception>> argLoader)
 	{
 		
 	}
 	
 	public interface OnLoaderResultListener
 	{
-		public void handleResult(List<GoogleAutoComplete> argList);
+		public void handleResult(List<AutoComplete> argList);
 	}
 	
 	public void setOnLoaderResultListener(OnLoaderResultListener listener)

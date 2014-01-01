@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GooglePlaceDetail extends BaseModel
+public class PlaceDetail extends BaseModel
 {
 
 	/**

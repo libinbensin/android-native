@@ -2,24 +2,24 @@ package com.android.foodmark.json;
 
 import java.util.List;
 
-import com.android.foodmark.model.GooglePlace;
+import com.android.foodmark.model.PlaceList;
 import com.google.gson.annotations.SerializedName;
 
-public class GooglePlaceResponse 
+public class PlaceListResponse
 {
 	@SerializedName("results")
-	private List<GooglePlace> googlePlaces;
+	private List<PlaceList> placeLists;
 	
 	private String status;
 
-	public List<GooglePlace> getGooglePlaces() 
+	public List<PlaceList> getPlaceLists()
 	{
-		return googlePlaces;
+		return placeLists;
 	}
 
-	public void setGooglePlaces(List<GooglePlace> googlePlaces) 
+	public void setPlaceLists(List<PlaceList> placeLists)
 	{
-		this.googlePlaces = googlePlaces;
+		this.placeLists = placeLists;
 	}
 
 	public String getStatus() 

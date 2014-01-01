@@ -1,6 +1,6 @@
 package com.android.foodmark.model;
 
-public class GoogleAutoComplete extends BaseModel
+public class AutoComplete extends BaseModel
 {
 
 	
