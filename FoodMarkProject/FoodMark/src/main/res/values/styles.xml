@@ -27,4 +27,11 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <style name="AppButtonMapAction" parent="android:Widget.Holo.Light.Button.Small">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:background">@color/White</item>
+
+    </style>
+
 </resources>

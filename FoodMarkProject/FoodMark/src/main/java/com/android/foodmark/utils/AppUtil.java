@@ -78,4 +78,16 @@ public final class AppUtil
             return null;
         }
     }
+
+    public static double toDouble(String s)
+    {
+        if(hasValue(s))
+        {
+            return Double.valueOf(s);
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }

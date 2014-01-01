@@ -2,6 +2,8 @@ package com.android.foodmark.constants;
 
 public final class ConfigConstants 
 {
+    public final static String GOOGLE_MAP_DIRECTION_URL = "http://maps.google.com/maps?saddr=%s&daddr=%s";
+
 	public final static String GOOGLE_PLACE_TEXTSEARCH_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&key=AIzaSyDQ5LSi13ighFRcp_JU7kXiKXnrjbPDiuk&sensor=true";
 	
 	public final static String GOOGLE_PLACE_AUTOCOMPLETE_EDIT_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=%s&sensor=%s&types=geocode&key=%s&location=42.7575,71.4644&&radius=252500";
