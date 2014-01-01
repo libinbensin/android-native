@@ -10,9 +10,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.foodmark.R;
-import com.android.foodmark.model.GooglePlaceDetail;
+import com.android.foodmark.model.PlaceDetail;
 
-public class ReviewAdapter extends ArrayAdapter<GooglePlaceDetail.Reviews>
+public class ReviewAdapter extends ArrayAdapter<PlaceDetail.Reviews>
 {
 
 	private Activity mContext;
@@ -47,7 +47,7 @@ public class ReviewAdapter extends ArrayAdapter<GooglePlaceDetail.Reviews>
 			reviewHolder = (ReviewHolder) row.getTag();
 		}
 		
-		GooglePlaceDetail.Reviews review = getItem(position);
+		PlaceDetail.Reviews review = getItem(position);
 		
 		if(review != null)
 		{

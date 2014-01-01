@@ -1,6 +1,6 @@
 package com.android.foodmark.constants;
 
-public final class AppConstants 
+public final class AppConstant
 {
 	public static String BLANK = "";
 	

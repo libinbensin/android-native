@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.foodmark.MainApplication;
-import com.android.foodmark.constants.AppConstants;
+import com.android.foodmark.constants.AppConstant;
 
 public final class AppUtil 
 {
@@ -21,7 +21,7 @@ public final class AppUtil
 	{
 		if(s == null)
 		{
-			return AppConstants.BLANK;
+			return AppConstant.BLANK;
 		}
 		return s.toLowerCase(Locale.US);
 	}

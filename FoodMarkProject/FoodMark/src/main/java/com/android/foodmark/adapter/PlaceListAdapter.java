@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
-import com.android.foodmark.model.GooglePlace;
+import com.android.foodmark.model.PlaceList;
 import com.android.foodmark.utils.AppUtil;
 import com.android.foodmark.widgets.StarRatingWidget;
 
-public class PlaceListAdapter extends ArrayAdapter<GooglePlace>
+public class PlaceListAdapter extends ArrayAdapter<PlaceList>
 {
 	private Activity mContext;
 	
@@ -27,7 +27,7 @@ public class PlaceListAdapter extends ArrayAdapter<GooglePlace>
 	@Override
 	public View getView(int position, View contentView , ViewGroup parent)
 	{
-		GooglePlace googlePlace = getItem(position);
+		PlaceList placeList = getItem(position);
 		
 		View row = contentView;
 		PlaceHolder placeHolder = null;
@@ -50,32 +50,32 @@ public class PlaceListAdapter extends ArrayAdapter<GooglePlace>
 		}
 		
 		// draw icon
-		if(googlePlace.getIcon() != null)
+		if(placeList.getIcon() != null)
 		{
 			// set animation
 			AppUtil.setImageAnimation(placeHolder.icon, 1000);
-			MainApplication.getImageDownloader().download(googlePlace.getIcon(), placeHolder.icon);
+			MainApplication.getImageDownloader().download(placeList.getIcon(), placeHolder.icon);
 		}
 		
-		if(googlePlace.getDescription() != null)
+		if(placeList.getDescription() != null)
 		{
-			placeHolder.title.setText(googlePlace.getDescription());
+			placeHolder.title.setText(placeList.getDescription());
 		}
-		if(googlePlace.getDistance() != null)
+		if(placeList.getDistance() != null)
 		{
-			placeHolder.distance.setText("Distance : " + googlePlace.getDistance() + " miles");
+			placeHolder.distance.setText("Distance : " + placeList.getDistance() + " miles");
 		}
 		
-		if(googlePlace.getRating() != null)
+		if(placeList.getRating() != null)
 		{
 			StarRatingWidget starRatingWidget = new StarRatingWidget(mContext);
 			placeHolder.linearLayout.removeAllViews();
-			starRatingWidget.setStarRating(placeHolder.linearLayout, Double.valueOf(googlePlace.getRating()));
+			starRatingWidget.setStarRating(placeHolder.linearLayout, Double.valueOf(placeList.getRating()));
 		}
 		
-		if(googlePlace.getVicinity() != null)
+		if(placeList.getVicinity() != null)
 		{
-			placeHolder.vicinity.setText(googlePlace.getVicinity());
+			placeHolder.vicinity.setText(placeList.getVicinity());
 		}	
 		return row;
 	}

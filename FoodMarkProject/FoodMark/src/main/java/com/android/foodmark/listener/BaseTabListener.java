@@ -8,14 +8,14 @@ import android.support.v7.app.ActionBar;
 /**
  * Created by libin on 12/26/13.
  */
-public class TabListener implements ActionBar.TabListener
+public class BaseTabListener implements ActionBar.TabListener
 {
     private Fragment mFragment;
     private final Activity mActivity;
     private final String mTag;
     private final Class<? extends Fragment> mClass;
 
-    public TabListener(Activity activity , String tag , Class<? extends Fragment> tClass)
+    public BaseTabListener(Activity activity, String tag, Class<? extends Fragment> tClass)
     {
         mActivity = activity;
         mTag = tag;

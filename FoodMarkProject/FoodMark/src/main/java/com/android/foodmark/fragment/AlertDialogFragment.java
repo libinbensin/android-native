@@ -1,7 +1,7 @@
 package com.android.foodmark.fragment;
 
 import com.android.foodmark.R;
-import com.android.foodmark.constants.AppConstants;
+import com.android.foodmark.constants.AppConstant;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,7 +27,7 @@ public abstract class AlertDialogFragment extends DialogFragment
 		AlertDialog dialog = builder.create();
 
 		dialog.setTitle(getResources().getString(R.string.alert_call_title));
-		dialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstants.OK,new OnClickListener() {
+		dialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.OK,new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) 
@@ -36,7 +36,7 @@ public abstract class AlertDialogFragment extends DialogFragment
 			}
 		});
 		
-		dialog.setButton(DialogInterface.BUTTON_NEGATIVE, AppConstants.CANCEL,new OnClickListener() {
+		dialog.setButton(DialogInterface.BUTTON_NEGATIVE, AppConstant.CANCEL,new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) 

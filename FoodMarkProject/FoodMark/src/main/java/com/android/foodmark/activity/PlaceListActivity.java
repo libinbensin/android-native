@@ -24,11 +24,11 @@ import android.widget.SpinnerAdapter;
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
 import com.android.foodmark.adapter.SearchCursorAdapter;
-import com.android.foodmark.callbacks.GoogleAutoCompleteCallback;
-import com.android.foodmark.callbacks.GoogleAutoCompleteCallback.OnLoaderResultListener;
-import com.android.foodmark.constants.AppConstants;
-import com.android.foodmark.fragment.GooglePlaceListFragment;
-import com.android.foodmark.model.GoogleAutoComplete;
+import com.android.foodmark.callbacks.AutoCompleteCallback;
+import com.android.foodmark.callbacks.AutoCompleteCallback.OnLoaderResultListener;
+import com.android.foodmark.constants.AppConstant;
+import com.android.foodmark.fragment.PlaceListFragment;
+import com.android.foodmark.model.AutoComplete;
 import com.android.foodmark.services.TimeOutService;
 import com.android.foodmark.utils.AppGeoCoder;
 import com.android.foodmark.utils.AppUtil;
@@ -39,18 +39,18 @@ import com.google.android.gms.location.LocationClient;
 
 import java.util.List;
 
-public class GooglePlaceListActivity extends DrawerActivity
+public class PlaceListActivity extends DrawerActivity
     implements OnQueryTextListener , OnLoaderResultListener , OnSuggestionListener ,
     GooglePlayServicesClient.ConnectionCallbacks ,GooglePlayServicesClient.OnConnectionFailedListener
 {
-	private GooglePlaceListFragment placeListFragment = null;
+	private PlaceListFragment placeListFragment = null;
 	
 	private SearchView mSearchView = null;
 	private MenuItem mSearchItem = null;
 	
 	private static final String[] SYMBOL_COLUMS = {BaseColumns._ID, "text"};
 	
-	private GoogleAutoCompleteCallback autoCompleteCallback = null;
+	private AutoCompleteCallback autoCompleteCallback = null;
 
     private LocationClient mLocationClient = null;
 
@@ -66,13 +66,13 @@ public class GooglePlaceListActivity extends DrawerActivity
             mLocationClient = new LocationClient(this,this,this);
             mLocationClient.connect();
 
-			placeListFragment = new GooglePlaceListFragment();
+			placeListFragment = new PlaceListFragment();
 			getSupportFragmentManager().beginTransaction().add(
                     R.id.activity_frame, placeListFragment).commit();
 		}
 		else
 		{
-			placeListFragment = (GooglePlaceListFragment)
+			placeListFragment = (PlaceListFragment)
                     getSupportFragmentManager().findFragmentById(R.id.activity_frame);
             placeListFragment.fetchData(mLaunchType, false);
 		}
@@ -162,7 +162,7 @@ public class GooglePlaceListActivity extends DrawerActivity
 		mSearchView.setOnQueryTextListener(this);
 		mSearchItem.setVisible(true);
 		
-		autoCompleteCallback = new GoogleAutoCompleteCallback(this);
+		autoCompleteCallback = new AutoCompleteCallback(this);
 		
 		autoCompleteCallback.setOnLoaderResultListener(this);
 
@@ -248,10 +248,10 @@ public class GooglePlaceListActivity extends DrawerActivity
 	{
 		// refresh the view only if the launch type is changed
 		if(!argType.equals(MainApplication.getPreferences().getString(
-                AppConstants.TYPE, AppConstants.BLANK)))
+                AppConstant.TYPE, AppConstant.BLANK)))
 		{
             // write the selected launch type to prefs
-			MainApplication.getPreferences().edit().putString(AppConstants.TYPE,argType).commit();
+			MainApplication.getPreferences().edit().putString(AppConstant.TYPE,argType).commit();
             // update the launch type
             mLaunchType =argType;
 			placeListFragment.fetchData(mLaunchType,true);
@@ -264,7 +264,7 @@ public class GooglePlaceListActivity extends DrawerActivity
 		if(AppUtil.hasValue(s))
 		{
 			Bundle bundle = new Bundle();
-			bundle.putString(AppConstants.QUERY, s);
+			bundle.putString(AppConstant.QUERY, s);
 			getSupportLoaderManager().restartLoader(4, bundle, autoCompleteCallback);
 		}
 		return true;
@@ -277,14 +277,14 @@ public class GooglePlaceListActivity extends DrawerActivity
 	}
 
 	@Override
-	public void handleResult(List<GoogleAutoComplete> autoCompletes) 
+	public void handleResult(List<AutoComplete> autoCompletes)
 	{
 		if(autoCompletes != null && autoCompletes.size() >0)
 		{
 			MatrixCursor matrixCursor = new MatrixCursor(SYMBOL_COLUMS);
 			
 			mSearchView.getSuggestionsAdapter().changeCursor(matrixCursor);
-			for(GoogleAutoComplete autoComplete : autoCompletes)
+			for(AutoComplete autoComplete : autoCompletes)
 			{
 				if(AppUtil.hasValue(autoComplete.getDescription()))
 				{
