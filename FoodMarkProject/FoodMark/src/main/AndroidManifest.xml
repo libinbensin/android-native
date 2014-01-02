@@ -23,7 +23,7 @@
     <application
         android:name="com.android.foodmark.MainApplication"
         android:allowBackup="true"
-        android:icon="@drawable/app_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.AppCompat.Light" >
 
@@ -84,6 +84,12 @@
         </activity>
 
         <activity android:name=".activity.WebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
+        <activity android:name=".activity.PlusActivity"
+
             android:configChanges="orientation|screenSize">
         </activity>
 
