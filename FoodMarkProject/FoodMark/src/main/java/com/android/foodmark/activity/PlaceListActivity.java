@@ -100,8 +100,8 @@ public class PlaceListActivity extends DrawerActivity
 	protected void onPause()
 	{
         // start the timeout service
-        Intent intent = new Intent(getApplicationContext(), TimeOutService.class);
-        startService(intent);
+        //Intent intent = new Intent(getApplicationContext(), TimeOutService.class);
+        //startService(intent);
 		super.onPause();
 	}
 	
