@@ -4,6 +4,7 @@ import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
 import com.android.foodmark.activity.BaseActivity;
 import com.android.foodmark.activity.MapActivity;
+import com.android.foodmark.activity.PlusActivity;
 import com.android.foodmark.activity.WebViewActivity;
 import com.android.foodmark.adapter.ReviewAdapter;
 import com.android.foodmark.callbacks.PlaceDetailCallback;
@@ -177,6 +178,13 @@ public class PlaceDetailFragment extends Fragment
                                 {
                                     Intent intent = new Intent(getActivity(), WebViewActivity.class);
                                     intent.putExtra(AppBundle.WEB_URL,webUrl);
+                                    /*String url = webUrl;
+                                    if(url.contains("hl=en-US"))
+                                    {
+                                        url = url.replace("hl=en-US","review=1");
+                                    }
+                                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                                            Uri.parse(url));*/
                                     startActivity(intent);
                                 }
                             }
