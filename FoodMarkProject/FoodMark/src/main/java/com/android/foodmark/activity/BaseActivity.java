@@ -19,6 +19,7 @@ public class BaseActivity extends ActionBarActivity
 	protected void onCreate(final Bundle bundle)
 	{
 		super.onCreate(bundle);
+        setContentView(R.layout.activity_base);
 		// initialize action bar
 		initActionBar();
 	}
@@ -119,6 +120,10 @@ public class BaseActivity extends ActionBarActivity
             {
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
+            }
+            case R.id.menu_favorites:
+            {
+                startActivity(new Intent(this, FavoriteActivity.class));
             }
 			default:
 				break;

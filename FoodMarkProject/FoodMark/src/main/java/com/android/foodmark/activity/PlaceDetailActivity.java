@@ -48,6 +48,8 @@ public class PlaceDetailActivity extends BaseActivity implements OnResultLoadedL
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.action_favorites, menu);
+
 		getMenuInflater().inflate(R.menu.action_share, menu);
 		
 		// Locate MenuItem with ShareActionProvider

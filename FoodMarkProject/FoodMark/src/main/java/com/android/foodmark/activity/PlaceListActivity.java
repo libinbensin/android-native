@@ -42,7 +42,7 @@ import com.google.android.gms.location.LocationClient;
 
 import java.util.List;
 
-public class PlaceListActivity extends DrawerActivity
+public class PlaceListActivity extends BaseActivity
     implements OnQueryTextListener , OnLoaderResultListener , OnSuggestionListener ,
     GooglePlayServicesClient.ConnectionCallbacks ,GooglePlayServicesClient.OnConnectionFailedListener
 {
@@ -199,8 +199,8 @@ public class PlaceListActivity extends DrawerActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
-		boolean handled = super.onCreateOptionsMenu(menu);
-		
+		getMenuInflater().inflate(R.menu.action_favorites, menu);
+
 		getMenuInflater().inflate(R.menu.action_spinner, menu);
 		
 		MenuItem spinnerItem = menu.findItem(R.id.menu_spinner);
@@ -227,7 +227,7 @@ public class PlaceListActivity extends DrawerActivity
 		
 		autoCompleteCallback.setOnLoaderResultListener(this);
 
-		return handled;
+		return super.onCreateOptionsMenu(menu);
 	}
 	
 	private void setUpFilterSpinner(MenuItem menuItem) 
