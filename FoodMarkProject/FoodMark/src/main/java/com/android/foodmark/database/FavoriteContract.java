@@ -21,11 +21,12 @@ public final class FavoriteContract
 
         public static final String COLUMN_TITLE = "TITLE";
         public static final String COLUMN_VICINITY = "VICINITY";
-        public static final String COLUMN_DISTANCE = "DISTANCE";
         public static final String COLUMN_RATING = "RATING";
         public static final String COLUMN_REFERENCE = "REFERENCE";
         public static final String COLUMN_IS_FAVORITE = "IS_FAVORITE";
         public static final String COLUMN_ICON_URL = "ICON_URL";
+        public static final String COLUMN_LATITUDE = "LATITUDE";
+        public static final String COLUMN_LONGITUDE = "LONGITUDE";
     }
 
     private static final String CREATE_TABLE = "CREATE TABLE";
@@ -43,12 +44,13 @@ public final class FavoriteContract
     public static final String CREATE_FAVORITE_TABLE = CREATE_TABLE + SPACE +
             FavoriteEntry.TABLE_NAME + SPACE + OPEN_BRACKET + FavoriteEntry._ID + SPACE +
             INTEGER_PRIMARY_KEY + COMMA_SEP + FavoriteEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE +
-            COMMA_SEP + FavoriteEntry.COLUMN_TITLE + BLOB_TYPE +
+            COMMA_SEP + FavoriteEntry.COLUMN_TITLE + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_VICINITY  + TEXT_TYPE +
-            COMMA_SEP + FavoriteEntry.COLUMN_DISTANCE  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_RATING  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_ICON_URL  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_REFERENCE  + TEXT_TYPE + UNIQUE +
+            COMMA_SEP + FavoriteEntry.COLUMN_LATITUDE  + TEXT_TYPE +
+            COMMA_SEP + FavoriteEntry.COLUMN_LONGITUDE  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_IS_FAVORITE + INTEGER_TYPE + SPACE +
             CLOSE_BRACKET;
 

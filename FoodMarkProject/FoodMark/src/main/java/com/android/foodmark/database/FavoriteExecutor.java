@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.database.FavoriteContract.FavoriteEntry;
+import com.android.foodmark.model.Geometry;
 import com.android.foodmark.model.PlaceList;
 import com.android.foodmark.security.AppSecurity;
+import com.android.foodmark.utils.AppLocationUtil;
 import com.android.foodmark.utils.AppUtil;
 
 import java.util.List;
@@ -28,13 +30,21 @@ public final class FavoriteExecutor
     {
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(FavoriteEntry.COLUMN_TITLE, encryptedByte(placeList.getDescription()));
+        contentValues.put(FavoriteEntry.COLUMN_TITLE, placeList.getDescription());
         contentValues.put(FavoriteEntry.COLUMN_VICINITY, placeList.getVicinity());
-        contentValues.put(FavoriteEntry.COLUMN_DISTANCE, placeList.getDistance());
         contentValues.put(FavoriteEntry.COLUMN_RATING, placeList.getRating());
         contentValues.put(FavoriteEntry.COLUMN_REFERENCE, placeList.getReference());
         contentValues.put(FavoriteEntry.COLUMN_IS_FAVORITE , placeList.isFavorite() ? 1 : 0);
         contentValues.put(FavoriteEntry.COLUMN_ICON_URL , placeList.getIcon());
+        if(placeList.getGeometry() != null)
+        {
+            Geometry.AppLocation appLocation = placeList.getGeometry().getLocation();
+            if(appLocation != null)
+            {
+                contentValues.put(FavoriteEntry.COLUMN_LATITUDE , appLocation.getLat());
+                contentValues.put(FavoriteEntry.COLUMN_LONGITUDE , appLocation.getLng());
+            }
+        }
 
        return db.insert(FavoriteContract.FavoriteEntry.TABLE_NAME , null , contentValues);
     }
@@ -64,9 +74,10 @@ public final class FavoriteExecutor
         String[] queryList = {
                 FavoriteEntry.COLUMN_TITLE ,
                 FavoriteEntry.COLUMN_VICINITY ,
-                FavoriteEntry.COLUMN_DISTANCE ,
                 FavoriteEntry.COLUMN_RATING ,
                 FavoriteEntry.COLUMN_REFERENCE,
+                FavoriteEntry.COLUMN_LATITUDE ,
+                FavoriteEntry.COLUMN_LONGITUDE ,
                 FavoriteEntry.COLUMN_IS_FAVORITE,
                 FavoriteEntry.COLUMN_ICON_URL};
 
@@ -80,11 +91,13 @@ public final class FavoriteExecutor
                 int index = 0;
 
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_TITLE);
-                placeList.setDescription(decryptedString(cursor.getBlob(index)));
+                placeList.setDescription(cursor.getString(index));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_VICINITY);
                 placeList.setVicinity(cursor.getString(index));
-                index = cursor.getColumnIndex(FavoriteEntry.COLUMN_DISTANCE);
-                placeList.setDistance(cursor.getString(index));
+                int latIndex = cursor.getColumnIndex(FavoriteEntry.COLUMN_LATITUDE);
+                int lngIndex = cursor.getColumnIndex(FavoriteEntry.COLUMN_LONGITUDE);
+                placeList.setDistance(AppLocationUtil.getDistance(
+                        cursor.getString(latIndex),cursor.getString(lngIndex)));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_RATING);
                 placeList.setRating(cursor.getString(index));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_REFERENCE);

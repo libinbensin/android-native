@@ -217,7 +217,7 @@ public class PlaceDetailFragment extends Fragment
                                 }
                             }
                         });
-                        Location current = MainApplication.getAppInstance().getLocation();
+                        Location current = MainApplication.getAppInstance().getLastLocation();
                         Geometry.AppLocation dist = geometry.getLocation();
                         // format direction uri
                         final String routeUrl = String.format(
