@@ -1,6 +1,7 @@
 package com.android.foodmark.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -97,8 +98,10 @@ public class BaseActivity extends ActionBarActivity
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.action_settings, menu);
+
 		getMenuInflater().inflate(R.menu.action_common, menu);
-				
+
 		return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -112,6 +115,11 @@ public class BaseActivity extends ActionBarActivity
 				finish();
 				return true;
 			}
+            case R.id.menu_settings:
+            {
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            }
 			default:
 				break;
 		}

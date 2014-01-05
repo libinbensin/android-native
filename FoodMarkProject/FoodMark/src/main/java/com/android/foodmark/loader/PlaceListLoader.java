@@ -8,6 +8,7 @@ import com.android.foodmark.constants.AppConfig;
 import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.dataaccess.HttpHelper;
 import com.android.foodmark.json.PlaceListResponse;
+import com.android.foodmark.utils.AppUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
@@ -32,8 +33,15 @@ public class PlaceListLoader extends BaseLoader<PlaceListResponse>
 		//LocationManager  mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
         Location location = MainApplication.getAppInstance().getLocation();//mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        
-		final String requestUrl = String.format(AppConfig.GOOGLE_PLACE_RESTAURANT_URL,mType, "true",MainApplication.getAppInstance().getGoogleApiKey(),Double.toString(location.getLatitude()),Double.toString(location.getLongitude()));
+        String radius = AppUtil.getRadius();
+
+		final String requestUrl = String.format(
+                AppConfig.GOOGLE_PLACE_RESTAURANT_URL,mType,
+                "true",
+                MainApplication.getAppInstance().getGoogleApiKey(),
+                Double.toString(location.getLatitude()),
+                Double.toString(location.getLongitude()),
+                radius);
 		return requestUrl;
 	}
 
