@@ -53,10 +53,7 @@ public class SettingsFragment extends ListFragment
         data = new SettingsData();
         data.setTitle(AppConstant.LOCATION);
         // check if location is enabled
-        LocationManager  mLocationManager = (LocationManager) MainApplication.getAppInstance()
-                .getSystemService(Context.LOCATION_SERVICE);
-        if(mLocationManager != null && mLocationManager
-                .isProviderEnabled(LocationManager.GPS_PROVIDER))
+        if(AppUtil.isGPSEnabled())
         {
             data.setDescription(AppConstant.ENABLED);
             gpsEnabled = true;
@@ -69,7 +66,6 @@ public class SettingsFragment extends ListFragment
         mSettingsAdapter.add(data);
 
     }
-
 
     @Override
     public void onResume()
@@ -95,7 +91,7 @@ public class SettingsFragment extends ListFragment
                 // launch location settings if GPS disabled
                 if(!gpsEnabled)
                 {
-                    Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
                 }
                 break;

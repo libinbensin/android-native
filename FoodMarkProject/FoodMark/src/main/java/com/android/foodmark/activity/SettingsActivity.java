@@ -9,7 +9,7 @@ import com.android.foodmark.R;
 import com.android.foodmark.fragment.SettingsFragment;
 
 /**
- * Created by libin_000 on 1/4/14.
+ * Created by libin on 1/4/14.
  */
 public class SettingsActivity extends BaseActivity
 {

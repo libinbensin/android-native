@@ -17,14 +17,17 @@ public class AppGeoCoder
 	{
 		Geocoder geocoder = new Geocoder(context);
 		List<Address> addresses = null;
-		Location location = new Location(AppConstant.BLANK);
+		Location location = null;
 		
 		try 
 		{
 			addresses = geocoder.getFromLocationName(input, 1);
-			location.setLatitude(addresses.get(0).getLatitude());
-			location.setLongitude(addresses.get(0).getLongitude());
-			
+            if(addresses != null && addresses.size() > 0)
+            {
+                location = new Location(AppConstant.BLANK);
+			    location.setLatitude(addresses.get(0).getLatitude());
+			    location.setLongitude(addresses.get(0).getLongitude());
+            }
 		} 
 		catch (IOException e) {
 		}

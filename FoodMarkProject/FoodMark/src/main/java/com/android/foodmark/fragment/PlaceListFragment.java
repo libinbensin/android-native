@@ -14,7 +14,9 @@ import com.android.foodmark.activity.BaseActivity;
 import com.android.foodmark.activity.PlaceDetailActivity;
 import com.android.foodmark.adapter.PlaceListAdapter;
 import com.android.foodmark.callbacks.PlaceCallback;
+import com.android.foodmark.model.Geometry;
 import com.android.foodmark.model.PlaceList;
+import com.android.foodmark.utils.AppLocationUtil;
 import com.android.foodmark.utils.AppUtil;
 
 import java.text.DecimalFormat;
@@ -35,8 +37,6 @@ public class PlaceListFragment extends ListFragment
 		placeListAdapter = new PlaceListAdapter(getActivity());
 		setListAdapter(placeListAdapter);
 		setListShown(true);
-        mLaunchType = getArguments().getString("TYPE");
-        fetchData(true);
 	}
 
     @Override
@@ -58,9 +58,7 @@ public class PlaceListFragment extends ListFragment
         {
 		    ((BaseActivity)getActivity()).showLoading();
         }
-
-        //String launchType = MainApplication.getPreferences().getString("TYPE",getResources().getString(R.string.action_restaurant));
-		Bundle bundle = new Bundle();
+        Bundle bundle = new Bundle();
 		bundle.putString("TYPE", AppUtil.toLowerCase(mLaunchType));
 		
 		PlaceCallback placeCallback =  new PlaceCallback(getActivity())
@@ -75,10 +73,11 @@ public class PlaceListFragment extends ListFragment
 				{
                     SortedMap<Double , PlaceList> placeMap = new TreeMap<Double, PlaceList>();
 
-
 					for(PlaceList googlePlace : argGooglePlace)
 					{
-						String dis = getDistance(googlePlace);
+                        Geometry geometry = googlePlace.getGeometry();
+						String dis = AppLocationUtil.getDistance(geometry.getLocation().getLat(),
+                                geometry.getLocation().getLng());
 						if(AppUtil.hasValue(dis))
 						{
 							googlePlace.setDistance(dis);
@@ -128,24 +127,6 @@ public class PlaceListFragment extends ListFragment
         intent.putExtra("PLACE", placeList);
 		startActivity(intent);
 	}
-	
-	/**
-	 * method to calculate distance from current selected location
-	 * 
-	 */
-	private String getDistance(PlaceList place)
-	{
-		Double toLat = Double.valueOf(place.getGeometry().getLocation().getLat());
-		Double toLng = Double.valueOf(place.getGeometry().getLocation().getLng());
-		
-		Location from = MainApplication.getAppInstance().getLocation();
-		float[] results = {0 };
-		
-		Location.distanceBetween(from.getLatitude(), from.getLongitude(), toLat, toLng, results);
-		
-		Double f = results[0] * 0.00062137119;
-		
-		return new DecimalFormat("#.##").format(f);
-	}
+
 	
 }
