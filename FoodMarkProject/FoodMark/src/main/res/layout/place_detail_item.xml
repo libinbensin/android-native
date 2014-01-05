@@ -6,38 +6,52 @@
     tools:context=".GooglePlaceDetailActivity" >
 
     <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/border_bg"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:paddingBottom="1dp">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white_bg"
-        android:layout_margin="5dp"
+        android:background="@color/White"
         android:orientation="horizontal">
 
         <LinearLayout
 	        android:layout_width="150dp"
 	        android:layout_height="100dp"
-	        android:padding="5dp"
 	        android:orientation="vertical" >
 	        
         <ImageView
             android:id="@+id/place_icon"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-	        android:background="@color/White"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
             android:contentDescription="@string/place_icon_description"/>
         </LinearLayout>
         
         <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical" >
-	        
-           	<TextView
-		        android:id="@+id/place_name"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:textSize="16sp"
-		        android:layout_gravity="left|center_horizontal"/>
-    		
+	        android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/place_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_gravity="left|center_horizontal"/>
+            </LinearLayout>
+
 		    <TextView
 		        android:id="@+id/place_address"
 		        android:layout_width="wrap_content"
@@ -45,13 +59,17 @@
 		        android:paddingTop="2dp"
 		        android:textSize="14sp"
 		        android:layout_gravity="left|center_horizontal"/>
-		    
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
 		    <LinearLayout 
 		        android:id="@+id/phone_number_layout"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:orientation="horizontal"
 		        android:layout_margin="5dp"
+                android:layout_alignParentLeft="true"
 		        android:clickable="true">
 		        
 		        <ImageView 
@@ -68,19 +86,28 @@
 			        android:textStyle="bold"
 			        android:layout_gravity="left|center_horizontal"/>
     		</LinearLayout>
+
+            <ImageView
+                android:id="@+id/expand_view_icon"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="top"
+                android:layout_alignParentRight="true"/>
+            </RelativeLayout>
 		 
     	</LinearLayout>
     </LinearLayout>
 
     <include layout="@layout/activity_map_view"></include>
 
+    </LinearLayout>
 
     <FrameLayout 
         android:id="@+id/review_detail_frame"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
+        android:clickable="false"
         android:orientation="vertical">
-        
     </FrameLayout>
 
 </LinearLayout>
