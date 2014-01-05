@@ -31,7 +31,9 @@ public class MainApplication extends Application
 	
 	private static SharedPreferences preferences;
 	
-	private  Location mLocation = null;
+	private  Location mSearchLocation = null;
+
+    private Location mLastLocation = null;
 
     private SQLiteDatabase mSQLiteDatabase = null;
 
@@ -131,28 +133,43 @@ public class MainApplication extends Application
         return mSQLiteDatabase;
     }
 
-    public void setLocation(Location location)
+    public void setSearchLocation(Location location)
 	{
-		mLocation = location;
+        mSearchLocation = location;
 	}
 	
-	public Location getLocation()
+	public Location getSearchLocation()
 	{
-		if(mLocation == null)
+		/*if(mSearchLocation == null)
 		{
 			LocationManager  mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		}
-		return mLocation;
+		}*/
+		return mSearchLocation;
 	}
+
+    public void setLastLocation(Location location)
+    {
+        mLastLocation = location;
+    }
+
+    public Location getLastLocation()
+    {
+		/*if(mSearchLocation == null)
+		{
+			LocationManager  mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			mLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		}*/
+        return mLastLocation;
+    }
 	
 	public void resetLocation()
 	{
-		if(mLocation != null)
+		if(mSearchLocation != null)
 		{
-			mLocation.reset();
+            mSearchLocation.reset();
 		}
-		mLocation = null;
+        mSearchLocation = null;
 	}
 
 	private void initPreference() 

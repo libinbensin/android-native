@@ -1,13 +1,16 @@
 package com.android.foodmark.activity;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.provider.Settings;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
@@ -57,6 +60,12 @@ public class PlaceListActivity extends DrawerActivity
     // default type is restaurant
     private String mLaunchType = null;
 
+    private String mRadius = null;
+
+    private boolean gpsEnabled = false;
+
+    private AlertDialog mGpsDialog;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -64,24 +73,14 @@ public class PlaceListActivity extends DrawerActivity
 		if(savedInstanceState == null)
 		{
             mLocationClient = new LocationClient(this,this,this);
-            mLocationClient.connect();
-
 			placeListFragment = new PlaceListFragment();
 			getSupportFragmentManager().beginTransaction().add(
                     R.id.activity_frame, placeListFragment).commit();
 		}
-		else
-		{
-			placeListFragment = (PlaceListFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.activity_frame);
-            placeListFragment.fetchData(mLaunchType, false);
-		}
-        // read the default launch type in prefs
         mLaunchType = MainApplication.getPreferences().getString(
                 "TYPE",getResources().getString(R.string.action_restaurant));
-        Bundle bundle = new Bundle();
-        bundle.putString("TYPE",mLaunchType);
-        placeListFragment.setArguments(bundle);
+        // get current radius in prefs
+        mRadius = AppUtil.getRadius();
     }
 
     @Override
@@ -102,6 +101,10 @@ public class PlaceListActivity extends DrawerActivity
         // start the timeout service
         //Intent intent = new Intent(getApplicationContext(), TimeOutService.class);
         //startService(intent);
+        if(mGpsDialog != null && mGpsDialog.isShowing() )
+        {
+            mGpsDialog.dismiss();
+        }
 		super.onPause();
 	}
 	
@@ -109,8 +112,66 @@ public class PlaceListActivity extends DrawerActivity
 	protected void onResume()
 	{
 		super.onResume();
-
+        // if gps location is disabled when activity first created
+        // check again if enabled now
+        if(!gpsEnabled)
+        {
+            if(AppUtil.isGPSEnabled())
+            {
+                mLocationClient.connect();
+            }
+            else
+            {
+                // show an alert dialog to user to enable it
+                showGpsEnableDialog();
+            }
+        }
+        else
+        {
+            // check if radius setting changed
+            final String currentRadius = AppUtil.getRadius();
+            if(mRadius != currentRadius)
+            {
+                mRadius = currentRadius;
+                // reload the list
+                placeListFragment.fetchData(mLaunchType,true);
+            }
+        }
 	}
+
+    private void showGpsEnableDialog()
+    {
+        if(mGpsDialog == null)
+        {
+            mGpsDialog = new AlertDialog.Builder(this).create();
+
+            mGpsDialog.setCancelable(false);
+            mGpsDialog.setTitle("GPS Location Disabled");
+            mGpsDialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.ENABLE,
+                    new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i)
+                {
+                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    dialogInterface.dismiss();
+                }
+            });
+
+            mGpsDialog.setButton(DialogInterface.BUTTON_NEGATIVE, AppConstant.CANCEL,
+                    new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i)
+                {
+                    // dismiss the dialog and exit the app
+                    dialogInterface.dismiss();
+                    finish();
+                }
+            });
+        }
+        mGpsDialog.show();
+    }
 
     @Override
     protected void onDestroy()
@@ -306,7 +367,7 @@ public class PlaceListActivity extends DrawerActivity
 		Location searchLocation = AppGeoCoder.getLocation(this, name);
 		if(searchLocation != null)
 		{
-			MainApplication.getAppInstance().setLocation(searchLocation);
+			MainApplication.getAppInstance().setSearchLocation(searchLocation);
 			// refresh the list
 			placeListFragment.fetchData(mLaunchType,true);
 		}
@@ -330,15 +391,23 @@ public class PlaceListActivity extends DrawerActivity
         if(serviceConnected())
         {
             Location location = mLocationClient.getLastLocation();
-            MainApplication.getAppInstance().setLocation(location);
+            if(location == null)
+            {
+                // ask user to check the location settings
+                showGpsEnableDialog();
+                return;
+            }
+            MainApplication.getAppInstance().setLastLocation(location);
+            MainApplication.getAppInstance().setSearchLocation(location);
+            gpsEnabled = true;
+            // update the UI
+            placeListFragment.fetchData(mLaunchType,true);
         }
 
         if(mLocationClient != null)
         {
             mLocationClient.disconnect();
         }
-        // update the UI
-        placeListFragment.fetchData(mLaunchType,true);
     }
 
     @Override

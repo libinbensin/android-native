@@ -3,6 +3,8 @@ package com.android.foodmark.utils;
 import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 
+import android.content.Context;
+import android.location.LocationManager;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -90,6 +92,18 @@ public final class AppUtil
         {
             return 0;
         }
+    }
+
+    public static boolean isGPSEnabled()
+    {
+        LocationManager mLocationManager = (LocationManager) MainApplication.getAppInstance()
+                .getSystemService(Context.LOCATION_SERVICE);
+        if(mLocationManager != null && mLocationManager
+                .isProviderEnabled(LocationManager.GPS_PROVIDER))
+        {
+            return true;
+        }
+        return false;
     }
 
     public static String getRadius()

@@ -32,7 +32,7 @@ public class PlaceListLoader extends BaseLoader<PlaceListResponse>
 	{
 		//LocationManager  mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 
-        Location location = MainApplication.getAppInstance().getLocation();//mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        Location location = MainApplication.getAppInstance().getSearchLocation();//mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         String radius = AppUtil.getRadius();
 
 		final String requestUrl = String.format(
