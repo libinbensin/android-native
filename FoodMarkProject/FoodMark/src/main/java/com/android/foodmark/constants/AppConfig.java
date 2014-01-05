@@ -12,7 +12,7 @@ public final class AppConfig
 	
 	public final static String GOOGLE_PLACE_DETAIL_URL = "https://maps.googleapis.com/maps/api/place/details/json?reference=%s&sensor=%s&key=%s";
 
-	public final static String GOOGLE_PLACE_RESTAURANT_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?types=%s&sensor=%s&key=%s&location=%s,%s&&radius=5000";
+	public final static String GOOGLE_PLACE_RESTAURANT_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?types=%s&sensor=%s&key=%s&location=%s,%s&&radius=%s";
 	
 	public final static String GOOGLE_PLACE_PHOTO_URL = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=%s&maxheight=%s&photoreference=%s&sensor=true&key=%s";
 	
