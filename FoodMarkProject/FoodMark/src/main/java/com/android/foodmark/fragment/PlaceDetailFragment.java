@@ -4,7 +4,6 @@ import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
 import com.android.foodmark.activity.BaseActivity;
 import com.android.foodmark.activity.MapActivity;
-import com.android.foodmark.activity.PlusActivity;
 import com.android.foodmark.activity.WebViewActivity;
 import com.android.foodmark.adapter.ReviewAdapter;
 import com.android.foodmark.callbacks.PlaceDetailCallback;
@@ -86,7 +85,7 @@ public class PlaceDetailFragment extends Fragment
 						final String phoneNumber = argPlaceDetail.getPhonenumber();
 						phoneTextView.setText(phoneNumber);
 						ImageView phoneIcon = (ImageView) getView().findViewById(R.id.phone_icon);
-						phoneIcon.setImageDrawable(getResources().getDrawable(R.drawable.phone_contact));
+						phoneIcon.setImageDrawable(getResources().getDrawable(R.drawable.call_contact));
 						
 						LinearLayout makCall = (LinearLayout) getView().findViewById(R.id.phone_number_layout);
 						makCall.setOnClickListener(new OnClickListener() {
@@ -115,6 +114,30 @@ public class PlaceDetailFragment extends Fragment
 							}
 						});
 					}
+
+                    // set expand-collapse button
+                    final ImageView expandIcon = (ImageView) getView()
+                            .findViewById(R.id.expand_view_icon);
+                    final LinearLayout mapFrameLayout = (LinearLayout) getView()
+                            .findViewById(R.id.map_frame_layout);
+                    expandIcon.setBackgroundResource(R.drawable.ic_action_expand);
+                    expandIcon.setOnClickListener(new OnClickListener() {
+                        boolean expand = false;
+                        @Override
+                        public void onClick(View view) {
+                            if(expand)
+                            {
+                                expandIcon.setBackgroundResource(R.drawable.ic_action_expand);
+                                mapFrameLayout.setVisibility(View.GONE);
+                            }
+                            else
+                            {
+                                expandIcon.setBackgroundResource(R.drawable.ic_action_collapse);
+                                mapFrameLayout.setVisibility(View.VISIBLE);
+                            }
+                            expand = !expand;
+                        }
+                    });
 					
 					boolean isImageDownloaded = false;
 					ImageView downloadImageView = (ImageView)getView().findViewById(R.id.place_icon);
@@ -124,7 +147,12 @@ public class PlaceDetailFragment extends Fragment
 					{
 						// TODO - need to find the best resolution based on the device 
 						PlaceDetail.Photos photo = argPlaceDetail.getPhotos().get(0);
-						final String photoUrl = String.format(AppConfig.GOOGLE_PLACE_PHOTO_URL, photo.getWidth(),photo.getHeight(),photo.getReference(),MainApplication.getAppInstance().getGoogleApiKey());
+						final String photoUrl = String.format(
+                                AppConfig.GOOGLE_PLACE_PHOTO_URL,
+                                photo.getWidth(),
+                                photo.getHeight(),
+                                photo.getReference(),
+                                MainApplication.getAppInstance().getGoogleApiKey());
 						try
 						{
 							MainApplication.getImageDownloader().download(photoUrl,downloadImageView );
