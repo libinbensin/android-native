@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.foodmark.R;
+import com.android.foodmark.constants.AppConstant;
 
 /**
- * Created by libin_000 on 12/25/13.
+ * Created by libin on 12/25/13.
  */
 public class EmptyFragment extends Fragment
 {
@@ -20,7 +21,7 @@ public class EmptyFragment extends Fragment
     {
         super.onActivityCreated(bundle);
         TextView textView = (TextView) getView().findViewById(R.id.empty_textView);
-        textView.setText(getArguments().getString("TITLE"));
+        textView.setText(getArguments().getString(AppConstant.TITLE));
     }
 
     @Override

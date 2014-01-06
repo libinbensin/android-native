@@ -27,4 +27,8 @@ public final class AppConstant
 
     public static final String ENABLE = "Enable";
 
+    public static final String PLACE = "PLACE";
+    public static final String TITLE = "TITLE";
+
+    public static final String Miles = "miles";
 }
