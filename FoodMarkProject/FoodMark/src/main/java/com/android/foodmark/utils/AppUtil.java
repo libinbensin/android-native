@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.foodmark.MainApplication;
+import com.android.foodmark.R;
 import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.constants.AppPrefs;
 
@@ -108,13 +109,25 @@ public final class AppUtil
 
     public static String getRadius()
     {
-        return MainApplication.getPreferences().getString(
-                AppPrefs.SEARCH_RADIUS,AppPrefs.DEFAULT_RADIUS);
+        return MainApplication.getPreferences()
+                .getString(AppPrefs.SEARCH_RADIUS,AppPrefs.DEFAULT_RADIUS);
     }
 
     public static void setRadius(String s)
     {
         MainApplication.getPreferences()
-                .edit().putString("SEARCH_RADIUS",s).commit();
+                .edit().putString(AppPrefs.SEARCH_RADIUS,s).commit();
     }
+
+    public static String getLaunchType()
+    {
+        return MainApplication.getPreferences()
+                .getString(AppPrefs.TYPE,AppPrefs.DEFAULT_TYPE);
+    }
+
+    public static void setLaunchType()
+    {
+        return;
+    }
+
 }

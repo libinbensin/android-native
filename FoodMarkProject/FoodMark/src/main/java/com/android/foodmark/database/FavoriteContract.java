@@ -2,8 +2,6 @@ package com.android.foodmark.database;
 
 import android.provider.BaseColumns;
 
-import java.security.PublicKey;
-
 /**
  * Created by libin on 12/17/13.
  */

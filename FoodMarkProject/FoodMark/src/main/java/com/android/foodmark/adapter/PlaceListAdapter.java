@@ -63,14 +63,18 @@ public class PlaceListAdapter extends ArrayAdapter<PlaceList>
 		}
 		if(placeList.getDistance() != null)
 		{
-			placeHolder.distance.setText("Distance : " + placeList.getDistance() + " miles");
+			placeHolder.distance.setText(
+                    mContext.getResources().getString(R.string.distance_title) +
+                    placeList.getDistance() +
+                    mContext.getResources().getString(R.string.distance_miles));
 		}
 		
 		if(placeList.getRating() != null)
 		{
 			StarRatingWidget starRatingWidget = new StarRatingWidget(mContext);
 			placeHolder.linearLayout.removeAllViews();
-			starRatingWidget.setStarRating(placeHolder.linearLayout, Double.valueOf(placeList.getRating()));
+			starRatingWidget.setStarRating(
+                    placeHolder.linearLayout, Double.valueOf(placeList.getRating()));
 		}
 		
 		if(placeList.getVicinity() != null)

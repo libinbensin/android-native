@@ -2,24 +2,22 @@ package com.android.foodmark.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
 import com.android.foodmark.activity.BaseActivity;
 import com.android.foodmark.activity.PlaceDetailActivity;
 import com.android.foodmark.adapter.PlaceListAdapter;
 import com.android.foodmark.callbacks.PlaceCallback;
+import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.model.Geometry;
 import com.android.foodmark.model.PlaceList;
 import com.android.foodmark.utils.AppLocationUtil;
 import com.android.foodmark.utils.AppUtil;
 
-import java.text.DecimalFormat;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedMap;
@@ -59,7 +57,7 @@ public class PlaceListFragment extends ListFragment
 		    ((BaseActivity)getActivity()).showLoading();
         }
         Bundle bundle = new Bundle();
-		bundle.putString("TYPE", AppUtil.toLowerCase(mLaunchType));
+		bundle.putString(AppConstant.TYPE, AppUtil.toLowerCase(mLaunchType));
 		
 		PlaceCallback placeCallback =  new PlaceCallback(getActivity())
 		{
@@ -121,11 +119,11 @@ public class PlaceListFragment extends ListFragment
 	public void onListItemClick (ListView l, View v, int position, long id)
 	{
 		PlaceList placeList = placeListAdapter.getItem(position);
-		String selectedRef =  placeList.getReference();
-		
+
 		Intent intent = new Intent(getActivity(), PlaceDetailActivity.class);
-        intent.putExtra("PLACE", placeList);
-		startActivity(intent);
+        intent.putExtra(AppConstant.PLACE, placeList);
+
+        startActivity(intent);
 	}
 
 	

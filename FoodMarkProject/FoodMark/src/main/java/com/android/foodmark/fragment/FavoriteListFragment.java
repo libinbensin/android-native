@@ -11,6 +11,7 @@ import com.android.foodmark.R;
 import com.android.foodmark.activity.BaseActivity;
 import com.android.foodmark.activity.PlaceDetailActivity;
 import com.android.foodmark.adapter.PlaceListAdapter;
+import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.database.FavoriteExecutor;
 import com.android.foodmark.model.PlaceList;
 
@@ -64,10 +65,10 @@ public class FavoriteListFragment extends ListFragment
     public void onListItemClick (ListView l, View v, int position, long id)
     {
         PlaceList placeList = placeListAdapter.getItem(position);
-        String selectedRef =  placeList.getReference();
 
         Intent intent = new Intent(getActivity(), PlaceDetailActivity.class);
-        intent.putExtra("PLACE", placeList);
+        intent.putExtra(AppConstant.PLACE, placeList);
+
         startActivity(intent);
     }
 }

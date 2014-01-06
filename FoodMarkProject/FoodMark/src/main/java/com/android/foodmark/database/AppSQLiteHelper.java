@@ -3,11 +3,7 @@ package com.android.foodmark.database;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import com.google.android.gms.internal.ca;
-import com.google.android.gms.internal.t;
 
 public class AppSQLiteHelper extends SQLiteOpenHelper
 {
