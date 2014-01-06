@@ -9,6 +9,7 @@ import com.android.foodmark.adapter.ReviewAdapter;
 import com.android.foodmark.callbacks.PlaceDetailCallback;
 import com.android.foodmark.constants.AppBundle;
 import com.android.foodmark.constants.AppConfig;
+import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.model.Geometry;
 import com.android.foodmark.model.PlaceDetail;
 import com.android.foodmark.utils.AppUtil;
@@ -40,7 +41,7 @@ public class PlaceDetailFragment extends Fragment
 	{
 		super.onActivityCreated(bundle);
 		Bundle argBundle = this.getArguments();
-		fetchData(argBundle.getString("REFERENCE"));
+		fetchData(argBundle.getString(AppConstant.REFERENCE));
 	}
 	
 	@Override
@@ -61,7 +62,7 @@ public class PlaceDetailFragment extends Fragment
 		((BaseActivity)getActivity()).showLoading();
 		
 		Bundle bundle = new Bundle();
-		bundle.putString("REFERENCE", argReference);
+		bundle.putString(AppConstant.REFERENCE, argReference);
 		
 		getLoaderManager().initLoader(2, bundle, new PlaceDetailCallback(getActivity())
 		{
@@ -264,7 +265,7 @@ public class PlaceDetailFragment extends Fragment
                         EmptyFragment emptyFragment = new EmptyFragment();
                         Bundle bundle = new Bundle();
 
-                        bundle.putString("TITLE" ,
+                        bundle.putString(AppConstant.TITLE ,
                                 getResources().getString(R.string.empty_review_list));
                         emptyFragment.setArguments(bundle);
                         getChildFragmentManager().beginTransaction().replace(

@@ -9,4 +9,8 @@ public class AppPrefs
 
     public static String DEFAULT_RADIUS = "5000";
 
+    public static String TYPE = "TYPE";
+
+    public static String DEFAULT_TYPE = "Restaurant";
+
 }

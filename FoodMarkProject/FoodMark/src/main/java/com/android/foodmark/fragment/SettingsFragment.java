@@ -1,25 +1,19 @@
 package com.android.foodmark.fragment;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import com.android.foodmark.MainApplication;
+import com.android.foodmark.R;
 import com.android.foodmark.adapter.SettingsAdapter;
 import com.android.foodmark.constants.AppConstant;
-import com.android.foodmark.constants.AppPrefs;
 import com.android.foodmark.model.SettingsData;
 import com.android.foodmark.utils.AppUtil;
-import com.google.android.gms.internal.br;
-import com.google.android.gms.internal.da;
 
 /**
  * Created by libin on 1/4/14.
@@ -46,8 +40,8 @@ public class SettingsFragment extends ListFragment
         // attach items
         // add set radius
         SettingsData data = new SettingsData();
-        data.setTitle("Search Radius");
-        data.setDescription(AppUtil.getRadius() + AppConstant.SPACE + AppConstant.METERS); // default 5000
+        data.setTitle(getResources().getString(R.string.settings_radius_title));
+        data.setDescription(AppUtil.getRadius() + AppConstant.SPACE + AppConstant.METERS);
         mSettingsAdapter.add(data);
 
         data = new SettingsData();
@@ -122,7 +116,7 @@ public class SettingsFragment extends ListFragment
         });
 
         builder.setNegativeButton(AppConstant.CANCEL, null);
-        builder.setTitle("Select Search Radius (In Meters)");
+        builder.setTitle(getResources().getString(R.string.select_radius_title));
         builder.show();
     }
 

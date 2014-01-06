@@ -50,7 +50,7 @@ public class PlaceListActivity extends BaseActivity
 	
 	private SearchView mSearchView = null;
 	private MenuItem mSearchItem = null;
-	
+
 	private static final String[] SYMBOL_COLUMS = {BaseColumns._ID, "text"};
 	
 	private AutoCompleteCallback autoCompleteCallback = null;
@@ -77,8 +77,8 @@ public class PlaceListActivity extends BaseActivity
 			getSupportFragmentManager().beginTransaction().add(
                     R.id.activity_frame, placeListFragment).commit();
 		}
-        mLaunchType = MainApplication.getPreferences().getString(
-                "TYPE",getResources().getString(R.string.action_restaurant));
+        // get current lauch type in prefs
+        mLaunchType = AppUtil.getLaunchType();
         // get current radius in prefs
         mRadius = AppUtil.getRadius();
     }
@@ -98,9 +98,6 @@ public class PlaceListActivity extends BaseActivity
 	@Override
 	protected void onPause()
 	{
-        // start the timeout service
-        //Intent intent = new Intent(getApplicationContext(), TimeOutService.class);
-        //startService(intent);
         if(mGpsDialog != null && mGpsDialog.isShowing() )
         {
             mGpsDialog.dismiss();
@@ -146,7 +143,7 @@ public class PlaceListActivity extends BaseActivity
             mGpsDialog = new AlertDialog.Builder(this).create();
 
             mGpsDialog.setCancelable(false);
-            mGpsDialog.setTitle("GPS Location Disabled");
+            mGpsDialog.setTitle(getResources().getString(R.string.location_disabled_title));
             mGpsDialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.ENABLE,
                     new DialogInterface.OnClickListener()
             {
@@ -215,7 +212,8 @@ public class PlaceListActivity extends BaseActivity
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		
 		mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-		MatrixCursor matrixCursor = new MatrixCursor(SYMBOL_COLUMS);
+
+        MatrixCursor matrixCursor = new MatrixCursor(SYMBOL_COLUMS);
 		SearchCursorAdapter searchCursorAdapter = new SearchCursorAdapter(this,matrixCursor);
 		
 		mSearchView.setSuggestionsAdapter(searchCursorAdapter);
@@ -276,8 +274,8 @@ public class PlaceListActivity extends BaseActivity
 	 */
 	private int getDefaultSelectionIndex() 
 	{
-		String launchType = MainApplication.getPreferences().getString(
-                "TYPE",getResources().getString(R.string.action_restaurant));
+		String launchType = AppUtil.getLaunchType();
+
 		if(launchType.equals(getResources().getString(R.string.action_bar)))
 		{
 			return 1;

@@ -20,7 +20,7 @@ import android.view.MenuItem;
 public class PlaceDetailActivity extends BaseActivity implements OnResultLoadedListener
 {
 
-	private PlaceDetailFragment googlePlaceDetailFragment;
+	private PlaceDetailFragment mPlaceDetailFragment;
 	
 	private ShareActionProvider mShareActionProvider;
 
@@ -32,24 +32,23 @@ public class PlaceDetailActivity extends BaseActivity implements OnResultLoadedL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_place_detail);
 
-        googlePlaceDetailFragment = new PlaceDetailFragment();
-        mPlaceList = (PlaceList) getIntent().getSerializableExtra("PLACE");
+        mPlaceDetailFragment = new PlaceDetailFragment();
+        mPlaceList = (PlaceList) getIntent().getSerializableExtra(AppConstant.PLACE);
 
-			Bundle bundle = new Bundle();
-			bundle.putString(AppConstant.REFERENCE, mPlaceList.getReference());
-			googlePlaceDetailFragment.setArguments(bundle);
+		Bundle bundle = new Bundle();
+		bundle.putString(AppConstant.REFERENCE, mPlaceList.getReference());
+        mPlaceDetailFragment.setArguments(bundle);
 			
-			getSupportFragmentManager().beginTransaction().add(R.id.search_detailframe, googlePlaceDetailFragment).commit();
+		getSupportFragmentManager().beginTransaction()
+                .add(R.id.search_detailframe, mPlaceDetailFragment).commit();
 
-		googlePlaceDetailFragment.setOnResultLoadedListener(this);
+        mPlaceDetailFragment.setOnResultLoadedListener(this);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.action_favorites, menu);
-
 		getMenuInflater().inflate(R.menu.action_share, menu);
 		
 		// Locate MenuItem with ShareActionProvider
@@ -118,11 +117,11 @@ public class PlaceDetailActivity extends BaseActivity implements OnResultLoadedL
 		
 		if(argDetail != null)
 		{
-			stringBuilder.append("Hey, I am Sharing this from Bensin App..");
-			stringBuilder.append("\n");
 			stringBuilder.append(argDetail.getName());
 			stringBuilder.append("\n");
 			stringBuilder.append(argDetail.getAddress());
+            stringBuilder.append("\n");
+            stringBuilder.append(getResources().getString(R.string.social_share_app_info));
 			
 			intent.putExtra(Intent.EXTRA_TEXT,stringBuilder.toString());
 		}
@@ -148,12 +147,13 @@ public class PlaceDetailActivity extends BaseActivity implements OnResultLoadedL
 		{
 			// set the information to be shared
 			mShareActionProvider.setShareIntent(getDefaultIntent(argDetail));
-		    mShareActionProvider.setOnShareTargetSelectedListener(new OnShareTargetSelectedListener() 
+		    mShareActionProvider.setOnShareTargetSelectedListener(
+                    new OnShareTargetSelectedListener()
 		    {
 				@Override
-				public boolean onShareTargetSelected(ShareActionProvider actionProvider, Intent intent) 
+				public boolean onShareTargetSelected(
+                        ShareActionProvider actionProvider, Intent intent)
 				{
-					
 					return true;
 				}
 			});
