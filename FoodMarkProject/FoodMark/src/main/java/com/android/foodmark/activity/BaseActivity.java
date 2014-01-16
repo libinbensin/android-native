@@ -121,6 +121,11 @@ public class BaseActivity extends ActionBarActivity
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             }
+            case R.id.menu_help:
+            {
+                startActivity(new Intent(this, HelpActivity.class));
+                return true;
+            }
             case R.id.menu_favorites:
             {
                 startActivity(new Intent(this, FavoriteActivity.class));
