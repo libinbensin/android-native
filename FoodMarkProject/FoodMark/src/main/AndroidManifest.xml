@@ -97,6 +97,10 @@
             android:configChanges="orientation|screenSize">
         </activity>
 
+        <activity android:name=".activity.HelpActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
         <service android:name=".services.TimeOutService"></service>
     </application>
 

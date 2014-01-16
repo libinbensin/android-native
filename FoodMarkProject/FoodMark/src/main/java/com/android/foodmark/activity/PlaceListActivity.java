@@ -120,7 +120,9 @@ public class PlaceListActivity extends BaseActivity
             else
             {
                 // show an alert dialog to user to enable it
-                showGpsEnableDialog();
+                showGpsEnableDialog(
+                        getResources().getString(R.string.location_disabled_title),
+                        AppConstant.ENABLE);
             }
         }
         else
@@ -136,22 +138,29 @@ public class PlaceListActivity extends BaseActivity
         }
 	}
 
-    private void showGpsEnableDialog()
+    private void showGpsEnableDialog(final String message, final String positive)
     {
         if(mGpsDialog == null)
         {
             mGpsDialog = new AlertDialog.Builder(this).create();
 
             mGpsDialog.setCancelable(false);
-            mGpsDialog.setTitle(getResources().getString(R.string.location_disabled_title));
-            mGpsDialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.ENABLE,
+            mGpsDialog.setTitle(message);
+            mGpsDialog.setButton(DialogInterface.BUTTON_POSITIVE, positive,
                     new DialogInterface.OnClickListener()
             {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i)
                 {
-                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     dialogInterface.dismiss();
+                    if(positive == AppConstant.ENABLE)
+                    {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                    else
+                    {
+                        finish();
+                    }
                 }
             });
 
@@ -392,7 +401,9 @@ public class PlaceListActivity extends BaseActivity
             if(location == null)
             {
                 // ask user to check the location settings
-                showGpsEnableDialog();
+                showGpsEnableDialog(
+                        getResources().getString(R.string.location_unavailable),
+                        AppConstant.OK);
                 return;
             }
             MainApplication.getAppInstance().setLastLocation(location);

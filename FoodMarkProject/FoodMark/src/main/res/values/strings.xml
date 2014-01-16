@@ -37,6 +37,7 @@
 
     <string name="social_share_app_info">Hey, I am Sharing this from Foodbook Android App!</string>
     <string name="location_disabled_title">GPS Location Disabled</string>
+    <string name="location_unavailable">Unable to retrieve current location.Check settings</string>
 
     <string name="settings_radius_title">Search Radius</string>
     <string name="select_radius_title">Select Search Radius (In Meters)</string>
