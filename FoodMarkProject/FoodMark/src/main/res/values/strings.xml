@@ -43,4 +43,6 @@
     <string name="select_radius_title">Select Search Radius (In Meters)</string>
     <string name="distance_title">Distance : </string>
     <string name="distance_miles">miles</string>
+    <string name="settings_theme_title">Theme</string>
+    <string name="select_theme_title">Set Theme</string>
 </resources>
