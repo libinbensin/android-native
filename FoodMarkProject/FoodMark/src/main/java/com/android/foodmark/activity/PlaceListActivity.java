@@ -15,6 +15,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.support.v7.widget.SearchView.OnSuggestionListener;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
@@ -120,9 +122,7 @@ public class PlaceListActivity extends BaseActivity
             else
             {
                 // show an alert dialog to user to enable it
-                showGpsEnableDialog(
-                        getResources().getString(R.string.location_disabled_title),
-                        AppConstant.ENABLE);
+                showGpsEnableDialog(getResources().getString(R.string.location_disabled_title));
             }
         }
         else
@@ -138,45 +138,61 @@ public class PlaceListActivity extends BaseActivity
         }
 	}
 
-    private void showGpsEnableDialog(final String message, final String positive)
+    private void showGpsEnableDialog(final String message)
     {
         if(mGpsDialog == null)
         {
             mGpsDialog = new AlertDialog.Builder(this).create();
-
             mGpsDialog.setCancelable(false);
-            mGpsDialog.setTitle(message);
-            mGpsDialog.setButton(DialogInterface.BUTTON_POSITIVE, positive,
+            mGpsDialog.setMessage(message);
+            mGpsDialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.ENABLE,
                     new DialogInterface.OnClickListener()
             {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i)
                 {
                     dialogInterface.dismiss();
-                    if(positive == AppConstant.ENABLE)
-                    {
-                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                    else
-                    {
-                        finish();
-                    }
+                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                 }
             });
 
             mGpsDialog.setButton(DialogInterface.BUTTON_NEGATIVE, AppConstant.CANCEL,
-                    new DialogInterface.OnClickListener()
+                        new DialogInterface.OnClickListener()
             {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i)
-                {
-                    // dismiss the dialog and exit the app
-                    dialogInterface.dismiss();
-                    finish();
-                }
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        // dismiss the dialog and exit the app
+                        dialogInterface.dismiss();
+                        finish();
+                    }
             });
         }
         mGpsDialog.show();
+        ((TextView)mGpsDialog.findViewById(android.R.id.message)).setGravity(Gravity.CENTER);
+    }
+
+
+    private void showErrorDialog(final String message)
+    {
+        if(mGpsDialog == null)
+        {
+            mGpsDialog = new AlertDialog.Builder(this).create();
+            mGpsDialog.setCancelable(false);
+            mGpsDialog.setMessage(message);
+            mGpsDialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.OK,
+                    new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i)
+                        {
+                            dialogInterface.dismiss();
+                            finish();
+                        }
+                    });
+        }
+        mGpsDialog.show();
+        ((TextView)mGpsDialog.findViewById(android.R.id.message)).setGravity(Gravity.CENTER);
     }
 
     @Override
@@ -401,9 +417,7 @@ public class PlaceListActivity extends BaseActivity
             if(location == null)
             {
                 // ask user to check the location settings
-                showGpsEnableDialog(
-                        getResources().getString(R.string.location_unavailable),
-                        AppConstant.OK);
+                showErrorDialog(getResources().getString(R.string.location_unavailable));
                 return;
             }
             MainApplication.getAppInstance().setLastLocation(location);
@@ -428,8 +442,8 @@ public class PlaceListActivity extends BaseActivity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult)
     {
-        // update the UI . Lets retrieve the location from location manager
-        placeListFragment.fetchData(mLaunchType,true);
+        // ask user to check the location settings
+        showErrorDialog(getResources().getString(R.string.location_unavailable));
     }
 
 }
