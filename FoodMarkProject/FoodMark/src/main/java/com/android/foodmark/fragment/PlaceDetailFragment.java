@@ -86,7 +86,7 @@ public class PlaceDetailFragment extends Fragment
 						final String phoneNumber = argPlaceDetail.getPhonenumber();
 						phoneTextView.setText(phoneNumber);
 						ImageView phoneIcon = (ImageView) getView().findViewById(R.id.phone_icon);
-						phoneIcon.setImageDrawable(getResources().getDrawable(R.drawable.call_contact));
+						phoneIcon.setImageDrawable(getResources().getDrawable(R.drawable.call_contacts));
 						
 						LinearLayout makCall = (LinearLayout) getView().findViewById(R.id.phone_number_layout);
 						makCall.setOnClickListener(new OnClickListener() {
