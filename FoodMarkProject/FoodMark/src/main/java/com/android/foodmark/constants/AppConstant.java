@@ -31,7 +31,4 @@ public final class AppConstant
     public static final String TITLE = "TITLE";
 
     public static final String Miles = "miles";
-
-    public static String THEME_ITEMS[] = new String[] {"Light" , "Light Dark"};
-
 }

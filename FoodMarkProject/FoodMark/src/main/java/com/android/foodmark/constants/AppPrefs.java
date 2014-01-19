@@ -13,8 +13,4 @@ public class AppPrefs
 
     public static String DEFAULT_TYPE = "Restaurant";
 
-    public static String APP_THEME = "Theme";
-
-    public static String DEFAULT_THEME = "Light";
-
 }

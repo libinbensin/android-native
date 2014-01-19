@@ -8,19 +8,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
-import com.android.foodmark.constants.AppConstant;
-import com.android.foodmark.utils.AppUtil;
 
 public class BaseActivity extends ActionBarActivity
 {
-    private ProgressDialog progressDialog;
+
+	private ProgressDialog progressDialog;
 	
 	@Override
 	protected void onCreate(final Bundle bundle)
 	{
-        setTheme(AppUtil.getThemeId(MainApplication.getThemeName()));
 		super.onCreate(bundle);
         setContentView(R.layout.activity_base);
 		// initialize action bar
@@ -78,7 +75,7 @@ public class BaseActivity extends ActionBarActivity
 	@Override
 	protected void onResume()
 	{
-        super.onResume();
+		super.onResume();
 	}
 	
 	@Override
