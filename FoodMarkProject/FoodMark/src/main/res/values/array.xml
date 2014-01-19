@@ -21,58 +21,39 @@
 
     <string-array name="about">
         <item name="title">About</item>
-        <item name="description">Foodbook helps people to find restaurants/bar/cafe
-            in near locations and review user rating and comments. Application by default displays
-            near by location restaurants and capable to search any specific places.
-            Also helps people navigate to the location using google map.</item>
+        <item name="description">Foodbook app helps you to find near by location restaurants/bar/cafe and
+        view the details about the items and navigate to the location. App also helps you to mark the favorite food place.</item>
     </string-array>
 
     <string-array name="features">
         <item name="title">Features</item>
         <item name="description">
-              &#8195;&#9830; Display near location food
-            \n&#8195;&#9830; Search places
-            \n&#8195;&#9830; Read user reviews
-            \n&#8195;&#9830; Write reviews using Google+ account
-            \n&#8195;&#9830; Navigate to the location
-            \n&#8195;&#9830; Share details trough social and email apps.
-            \n&#8195;&#9830; Mark Favorite food place
-            \n&#8195;&#9830; View location map
-            \n&#8195;&#9830; Change search radius
+            -  Read reviews about the place\n
+            -  Write reviews using Google+ account\n
+            -  Navigate to the location found\n
+            -  Share the details\n
+            -  Mark as Favorite\n
+            -  View Map
         </item>
     </string-array>
 
     <string-array name="permissions">
-        <item name="title">Dependency</item>
-        <item name="description">
-            &#8195;&#9830; Access device location to identity the current location
-        \n&#8195;&#9830; Network to retrieve date from Google Place Service
-        \n&#8195;&#9830; Access device storage to mark favorites
-        \n&#8195;&#9830; Google Map to navigate to location</item>
-    </string-array>
-
-    <string-array name="limits">
-        <item name="title">Limits</item>
-        <item name="description">
-            &#8195;&#9830; App will work only if device location is enabled and agreed
-            \n&#8195;&#9830; App will search only on specified radius provided in settings
-            \n&#8195;&#9830; Writing review can only be using Google+ account
-            \n&#8195;&#9830; Displays reviews only from Google users</item>
+        <item name="title">User Permissions and Dependency</item>
+        <item name="description">Access device location to identity the current location.\n
+        Network to retrieve date from Google Place Service.\n
+        Access device storage to mark favorites</item>
     </string-array>
 
     <string-array name="next">
         <item name="title">What next?</item>
-        <item name="description">
-            &#8195;&#9830; Capture favorite food picture/video
-            \n&#8195;&#9830; Review favorite recipes
-            \n&#8195;&#9830; Notify on favorite recipes on near location</item>
+        <item name="description">Capture your favorite food as picture or video.
+            \nGuide you with near by recipes based on your favorite place</item>
     </string-array>
 
     <array name="help_items">
         <item>@array/about</item>
         <item>@array/features</item>
         <item>@array/permissions</item>
-        <item>@array/limits</item>
         <item>@array/next</item>
     </array>
     
