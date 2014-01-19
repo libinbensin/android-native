@@ -113,7 +113,7 @@ public class PlaceDetailActivity extends BaseActivity implements OnResultLoadedL
 		StringBuilder stringBuilder = new StringBuilder();
 		
 		Intent intent = new Intent(Intent.ACTION_SEND);
-		intent.setType("text/plain");
+		intent.setType("*/*");
 		
 		if(argDetail != null)
 		{
@@ -121,6 +121,8 @@ public class PlaceDetailActivity extends BaseActivity implements OnResultLoadedL
 			stringBuilder.append("\n");
 			stringBuilder.append(argDetail.getAddress());
             stringBuilder.append("\n");
+            stringBuilder.append(getResources().getString(R.string.social_share_app_info));
+			
 			intent.putExtra(Intent.EXTRA_TEXT,stringBuilder.toString());
 		}
 	    return intent;
