@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
-import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.model.PlaceList;
 import com.android.foodmark.utils.AppUtil;
 import com.android.foodmark.widgets.StarRatingWidget;
@@ -66,7 +65,6 @@ public class PlaceListAdapter extends ArrayAdapter<PlaceList>
 		{
 			placeHolder.distance.setText(
                     mContext.getResources().getString(R.string.distance_title) +
-                    AppConstant.SPACE +
                     placeList.getDistance() +
                     mContext.getResources().getString(R.string.distance_miles));
 		}
