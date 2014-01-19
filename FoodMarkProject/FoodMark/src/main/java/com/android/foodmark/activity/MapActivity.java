@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.android.foodmark.R;
 import com.android.foodmark.constants.AppBundle;
+import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.fragment.PlaceMapFragment;
 import com.android.foodmark.model.Geometry;
 
@@ -23,11 +24,11 @@ public class MapActivity extends BaseActivity
         Bundle bundle = new Bundle();
         mGeometry = (Geometry) getIntent().getSerializableExtra(AppBundle.LOCATION);
         bundle.putSerializable(AppBundle.LOCATION, mGeometry);
-
+        bundle.putString(AppBundle.MAP_TYPE, AppConstant.MAP_FULL);
         PlaceMapFragment mapFragment = new PlaceMapFragment();
         mapFragment.setArguments(bundle);
 
-        getActionBar().hide();
+        getSupportActionBar().hide();
 
         getSupportFragmentManager().beginTransaction().add(
                 R.id.activity_frame,mapFragment).commit();
