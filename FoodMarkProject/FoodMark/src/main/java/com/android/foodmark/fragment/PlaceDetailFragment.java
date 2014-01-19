@@ -182,6 +182,7 @@ public class PlaceDetailFragment extends Fragment
                         final Geometry geometry = argPlaceDetail.getGeometry();
                         Bundle mapInfo = new Bundle();
                         mapInfo.putSerializable(AppBundle.LOCATION,geometry);
+                        mapInfo.putString(AppBundle.MAP_TYPE,AppConstant.MAP_SIMPLE);
                         mapFragment.setArguments(mapInfo);
                         getChildFragmentManager().beginTransaction().add(
                                 R.id.map_detail_frame, mapFragment).commit();
