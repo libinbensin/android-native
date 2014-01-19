@@ -140,7 +140,7 @@ public class SettingsFragment extends ListFragment
 
         for (CharSequence sequence : mRadiusItems)
         {
-            if(sequence.toString() == s)
+            if(sequence.toString().contentEquals(s))
             {
                 break;
             }
@@ -197,7 +197,7 @@ public class SettingsFragment extends ListFragment
 
         for (CharSequence sequence : AppConstant.THEME_ITEMS)
         {
-            if(sequence.toString() == theme)
+            if(sequence.toString().contentEquals(theme))
             {
                 break;
             }
