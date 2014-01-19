@@ -11,16 +11,15 @@
 	    android:background="@color/White"
 	    android:orientation="horizontal">
     	
-        <LinearLayout
+        <LinearLayout 
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_gravity="center">
+            android:layout_gravity="center|center_horizontal">
 	        <ImageView 
-	            android:layout_width="fill_parent"
-	            android:layout_height="fill_parent"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
 	            android:id="@+id/search_item_icon"
-                android:layout_gravity="center"
-                android:scaleType="center"
+                android:layout_margin="5dp"
 	            android:contentDescription="@string/search_icon_description"/>
         </LinearLayout>
         
