@@ -25,6 +25,12 @@ public class HelpAdapter extends ArrayAdapter<HelpData>
     }
 
     @Override
+    public boolean isEnabled (int position)
+    {
+        return false;
+    }
+
+    @Override
     public View getView(int position , View contentView, ViewGroup parent)
     {
         View row = contentView;
