@@ -71,6 +71,8 @@ public class PlaceListActivity extends BaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
+        // int app theme
+        MainApplication.getAppInstance().intTheme();
 		super.onCreate(savedInstanceState);
 		if(savedInstanceState == null)
 		{
@@ -239,7 +241,8 @@ public class PlaceListActivity extends BaseActivity
 		mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         MatrixCursor matrixCursor = new MatrixCursor(SYMBOL_COLUMS);
-		SearchCursorAdapter searchCursorAdapter = new SearchCursorAdapter(this,matrixCursor);
+		SearchCursorAdapter searchCursorAdapter = new SearchCursorAdapter(
+                getActionBar().getThemedContext(),matrixCursor);
 		
 		mSearchView.setSuggestionsAdapter(searchCursorAdapter);
 		mSearchView.setOnSuggestionListener(this);
@@ -258,7 +261,7 @@ public class PlaceListActivity extends BaseActivity
 		Spinner spinner = (Spinner) MenuItemCompat.getActionView(menuItem);
 		
 		SpinnerAdapter spinnerAdapter =  ArrayAdapter.createFromResource(
-                this, R.array.spinner_filter_items, R.layout.spinner_menu_item);
+                getActionBar().getThemedContext(), R.array.spinner_filter_items, R.layout.spinner_menu_item);
 		spinner.setAdapter(spinnerAdapter);
 		spinner.setSelection(getDefaultSelectionIndex(), false);
 		spinner.setOnItemSelectedListener(new OnItemSelectedListener() 

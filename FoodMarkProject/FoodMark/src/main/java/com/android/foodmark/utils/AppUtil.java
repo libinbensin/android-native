@@ -13,6 +13,7 @@ import com.android.foodmark.MainApplication;
 import com.android.foodmark.R;
 import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.constants.AppPrefs;
+import com.google.android.gms.internal.el;
 
 public final class AppUtil 
 {
@@ -130,4 +131,38 @@ public final class AppUtil
         return;
     }
 
+    public static String getTheme()
+    {
+        return MainApplication.getPreferences()
+                .getString(AppPrefs.APP_THEME,AppPrefs.DEFAULT_THEME);
+    }
+
+    public static void setTheme(String theme) {
+        MainApplication.getPreferences()
+                .edit().putString(AppPrefs.APP_THEME,theme).commit();
+    }
+
+    public static int getThemeId(String theme)
+    {
+        int id = R.style.Theme_AppCompat_Light;
+        int index = 0;
+
+        for(String s: AppConstant.THEME_ITEMS)
+        {
+           if(s.contentEquals(theme))
+           {
+               if(index == 0)
+               {
+                   id = R.style.Theme_AppCompat_Light;
+               }
+               else if(index == 1)
+               {
+                   id = R.style.Theme_AppCompat_Light_DarkActionBar;
+               }
+           }
+           index++;
+        }
+
+        return id;
+    }
 }
