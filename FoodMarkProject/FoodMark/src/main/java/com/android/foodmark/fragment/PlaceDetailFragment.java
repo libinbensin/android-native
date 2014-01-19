@@ -19,6 +19,9 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -84,10 +87,10 @@ public class PlaceDetailFragment extends Fragment
 					{
 						TextView phoneTextView = ((TextView)getView().findViewById(R.id.phone_number));
 						final String phoneNumber = argPlaceDetail.getPhonenumber();
-						phoneTextView.setText(phoneNumber);
-						ImageView phoneIcon = (ImageView) getView().findViewById(R.id.phone_icon);
-						phoneIcon.setImageDrawable(getResources().getDrawable(R.drawable.call_contacts));
-						
+                        SpannableString spannableString = new SpannableString(phoneNumber);
+                        spannableString.setSpan(new UnderlineSpan(),0,spannableString.length(),0);
+						phoneTextView.setText(spannableString);
+
 						LinearLayout makCall = (LinearLayout) getView().findViewById(R.id.phone_number_layout);
 						makCall.setOnClickListener(new OnClickListener() {
 							
