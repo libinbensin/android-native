@@ -12,9 +12,6 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:dividerHeight="5dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:clickable="false"
 		tools:listitem="@layout/help_list_item"/>
 
 </LinearLayout>
