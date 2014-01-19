@@ -1,5 +1,7 @@
 package com.android.foodmark;
 
+import com.android.foodmark.constants.AppConstant;
+import com.android.foodmark.constants.AppPrefs;
 import com.android.foodmark.database.SQLiteAsyncTask;
 import com.android.foodmark.security.AppSecurity;
 import com.android.foodmark.utils.AppUtil;
@@ -24,8 +26,10 @@ public class MainApplication extends Application
 	
 	// Google API key
 	private final static String GOOGLE_API_KEY = "AIzaSyDQ5LSi13ighFRcp_JU7kXiKXnrjbPDiuk";
-	
-	private static MainApplication appInstance;
+
+    private static String mThemeName = "Light"; // initialize default theme
+
+    private static MainApplication appInstance;
 	
 	private static ImageDownloader imageDownloader = new ImageDownloader();
 	
@@ -59,6 +63,8 @@ public class MainApplication extends Application
 	}
 
     public static byte[] getSecretKey() { return mSecretKey; }
+
+    public static String getThemeName() {return mThemeName;}
 	
 	@Override
 	public void onCreate()
@@ -69,6 +75,11 @@ public class MainApplication extends Application
         initSQLite();
         initSecurity();
 	}
+
+    public static void intTheme()
+    {
+        mThemeName = getPreferences().getString(AppPrefs.APP_THEME,AppPrefs.DEFAULT_THEME);
+    }
 
     private void initSecurity()
     {

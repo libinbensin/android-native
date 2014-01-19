@@ -12,8 +12,10 @@ import android.widget.ListView;
 import com.android.foodmark.R;
 import com.android.foodmark.adapter.SettingsAdapter;
 import com.android.foodmark.constants.AppConstant;
+import com.android.foodmark.constants.AppPrefs;
 import com.android.foodmark.model.SettingsData;
 import com.android.foodmark.utils.AppUtil;
+import com.google.android.gms.internal.da;
 
 /**
  * Created by libin on 1/4/14.
@@ -42,6 +44,11 @@ public class SettingsFragment extends ListFragment
         SettingsData data = new SettingsData();
         data.setTitle(getResources().getString(R.string.settings_radius_title));
         data.setDescription(AppUtil.getRadius() + AppConstant.SPACE + AppConstant.METERS);
+        mSettingsAdapter.add(data);
+
+        data = new SettingsData();
+        data.setTitle(getResources().getString(R.string.settings_theme_title));
+        data.setDescription(AppUtil.getTheme());
         mSettingsAdapter.add(data);
 
         data = new SettingsData();
@@ -82,6 +89,11 @@ public class SettingsFragment extends ListFragment
             }
             case 1:
             {
+                launchThemePicker();
+                break;
+            }
+            case 2:
+            {
                 // launch location settings if GPS disabled
                 if(!gpsEnabled)
                 {
@@ -97,7 +109,8 @@ public class SettingsFragment extends ListFragment
 
     private void launchRadiusPicker()
     {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(
+                getActivity().getActionBar().getThemedContext());
 
         // check the index of radius in preference
         builder.setSingleChoiceItems(
@@ -148,4 +161,55 @@ public class SettingsFragment extends ListFragment
         return mRadiusItems[index].toString();
     }
 
+
+    private void launchThemePicker()
+    {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(
+                getActivity().getActionBar().getThemedContext());
+
+        // check the index of theme in preference
+        builder.setSingleChoiceItems(
+                AppConstant.THEME_ITEMS,getThemeIndex(
+                AppUtil.getTheme()),new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int position)
+            {
+                // updated the selected radius to prefs
+                AppUtil.setTheme(getThemeString(position));
+                mSettingsAdapter.getItem(1).setDescription(
+                        getThemeString(position));
+                mSettingsAdapter.notifyDataSetChanged();
+                dialogInterface.dismiss();
+                AppUtil.showToast("Relaunch the app to reflect theme changes");
+            }
+
+        });
+
+        builder.setNegativeButton(AppConstant.CANCEL, null);
+        builder.setTitle(getResources().getString(R.string.select_theme_title));
+        builder.show();
+    }
+
+    private int getThemeIndex(String theme)
+    {
+        int index = 0;
+
+        for (CharSequence sequence : AppConstant.THEME_ITEMS)
+        {
+            if(sequence.toString() == theme)
+            {
+                break;
+            }
+            index++;
+        }
+
+        return index;
+    }
+
+
+    private String getThemeString(int position)
+    {
+        return AppConstant.THEME_ITEMS[position].toString();
+    }
 }
