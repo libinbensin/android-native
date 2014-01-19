@@ -31,6 +31,9 @@ public class HelpActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
+        // add only help menu here
+        getMenuInflater().inflate(R.menu.action_common, menu);
+
         return true;
     }
 }
