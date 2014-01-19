@@ -26,7 +26,7 @@ public abstract class AlertDialogFragment extends DialogFragment
 		Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.dialog_light));
 		AlertDialog dialog = builder.create();
 
-		dialog.setTitle(getResources().getString(R.string.alert_call_title));
+		dialog.setMessage(getResources().getString(R.string.alert_call_title));
 		dialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.OK,new OnClickListener() {
 			
 			@Override

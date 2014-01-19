@@ -27,7 +27,7 @@
     <string name="camera_stop">Stop</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="alert_call_title">You are leaving the app to make call</string>
+    <string name="alert_call_title">You are making call...</string>
     <string name="empty_review_list">No Reviews found.</string>
     <string name="empty_favorite_list">No Favorites marked.</string>
 
@@ -37,7 +37,7 @@
 
     <string name="social_share_app_info">Hey, I am Sharing this from Foodbook Android App!</string>
     <string name="location_disabled_title">GPS Location Disabled</string>
-    <string name="location_unavailable">Unable to retrieve current location.\nCheck device settings and relaunch</string>
+    <string name="location_unavailable">Unable to retrieve current location.\nCheck device settings and relaunch the app</string>
 
     <string name="settings_radius_title">Search Radius</string>
     <string name="select_radius_title">Select Search Radius (In Meters)</string>
