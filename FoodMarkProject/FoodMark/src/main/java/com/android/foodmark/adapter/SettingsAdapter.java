@@ -20,7 +20,7 @@ public class SettingsAdapter extends ArrayAdapter<SettingsData>
 
     public SettingsAdapter(Context context)
     {
-        super(context, R.layout.settings_list);
+        super(((Activity)context).getActionBar().getThemedContext(), R.layout.settings_list);
         mContext = context;
     }
 
