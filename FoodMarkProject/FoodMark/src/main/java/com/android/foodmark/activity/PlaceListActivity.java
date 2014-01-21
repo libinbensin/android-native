@@ -66,7 +66,7 @@ public class PlaceListActivity extends BaseActivity
 
     private boolean gpsEnabled = false;
 
-    private AlertDialog mGpsDialog;
+    private AlertDialog mErrorDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -102,9 +102,9 @@ public class PlaceListActivity extends BaseActivity
 	@Override
 	protected void onPause()
 	{
-        if(mGpsDialog != null && mGpsDialog.isShowing() )
+        if(mErrorDialog != null && mErrorDialog.isShowing() )
         {
-            mGpsDialog.dismiss();
+            mErrorDialog.dismiss();
         }
 		super.onPause();
 	}
@@ -124,7 +124,8 @@ public class PlaceListActivity extends BaseActivity
             else
             {
                 // show an alert dialog to user to enable it
-                showGpsEnableDialog(getResources().getString(R.string.location_disabled_title));
+                showGpsEnableDialog(getResources().getString(R.string.location_disabled_title),
+                        getResources().getString(R.string.location_disabled_mg));
             }
         }
         else
@@ -140,14 +141,15 @@ public class PlaceListActivity extends BaseActivity
         }
 	}
 
-    private void showGpsEnableDialog(final String message)
+    private void showGpsEnableDialog(final String title, final String message)
     {
-        if(mGpsDialog == null)
+        if(mErrorDialog == null)
         {
-            mGpsDialog = new AlertDialog.Builder(this).create();
-            mGpsDialog.setCancelable(false);
-            mGpsDialog.setMessage(message);
-            mGpsDialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.ENABLE,
+            mErrorDialog = new AlertDialog.Builder(getActionBar().getThemedContext()).create();
+            mErrorDialog.setCancelable(false);
+            mErrorDialog.setTitle(title);
+            mErrorDialog.setMessage(message);
+            mErrorDialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.ENABLE,
                     new DialogInterface.OnClickListener()
             {
                 @Override
@@ -158,7 +160,7 @@ public class PlaceListActivity extends BaseActivity
                 }
             });
 
-            mGpsDialog.setButton(DialogInterface.BUTTON_NEGATIVE, AppConstant.CANCEL,
+            mErrorDialog.setButton(DialogInterface.BUTTON_NEGATIVE, AppConstant.CANCEL,
                         new DialogInterface.OnClickListener()
             {
                 @Override
@@ -170,19 +172,21 @@ public class PlaceListActivity extends BaseActivity
                     }
             });
         }
-        mGpsDialog.show();
-        ((TextView)mGpsDialog.findViewById(android.R.id.message)).setGravity(Gravity.CENTER);
+        mErrorDialog.show();
+        ((TextView)mErrorDialog.findViewById(android.R.id.message)).setGravity(Gravity.CENTER);
     }
 
 
-    private void showErrorDialog(final String message)
+    private void showErrorDialog(final String title, final String message)
     {
-        if(mGpsDialog == null)
+        if(mErrorDialog == null)
         {
-            mGpsDialog = new AlertDialog.Builder(this).create();
-            mGpsDialog.setCancelable(false);
-            mGpsDialog.setMessage(message);
-            mGpsDialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.OK,
+            mErrorDialog = new AlertDialog.Builder(
+                    getActionBar().getThemedContext()).create();
+            mErrorDialog.setCancelable(false);
+            mErrorDialog.setTitle(title);
+            mErrorDialog.setMessage(message);
+            mErrorDialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.OK,
                     new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -193,8 +197,8 @@ public class PlaceListActivity extends BaseActivity
                         }
                     });
         }
-        mGpsDialog.show();
-        ((TextView)mGpsDialog.findViewById(android.R.id.message)).setGravity(Gravity.CENTER);
+        mErrorDialog.show();
+        ((TextView)mErrorDialog.findViewById(android.R.id.message)).setGravity(Gravity.CENTER);
     }
 
     @Override
@@ -400,7 +404,7 @@ public class PlaceListActivity extends BaseActivity
 		else
 		{
 			// handle failure
-			AppUtil.showToast(getResources().getString(R.string.location_error_message));
+			AppUtil.showToast(getResources().getString(R.string.search_error_msg));
 		}
 		return true;
 	}
@@ -420,7 +424,8 @@ public class PlaceListActivity extends BaseActivity
             if(location == null)
             {
                 // ask user to check the location settings
-                showErrorDialog(getResources().getString(R.string.location_unavailable));
+                showErrorDialog(getResources().getString(R.string.location_error_title),
+                        getResources().getString(R.string.location_error_msg));
                 return;
             }
             MainApplication.getAppInstance().setLastLocation(location);
@@ -446,7 +451,8 @@ public class PlaceListActivity extends BaseActivity
     public void onConnectionFailed(ConnectionResult connectionResult)
     {
         // ask user to check the location settings
-        showErrorDialog(getResources().getString(R.string.location_unavailable));
+        showErrorDialog(getResources().getString(R.string.location_error_msg),
+                getResources().getString(R.string.location_error_msg));
     }
 
 }

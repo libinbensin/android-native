@@ -18,7 +18,7 @@
 	 <string name="search_hint">Search Place</string>
 	 
 	 <string name="place_empty_list">No result. Please try different search.</string>
-	 <string name="location_error_message">Unable to find the location..Please try different search</string>
+	 <string name="search_error_msg">Unable to find the location..Please try different search</string>
 	 <string name="menu_favorites">Favorites</string>
 	 <string name="menu_settings">Settings</string>
 	 <string name="menu_help">Help</string>
@@ -27,7 +27,8 @@
     <string name="camera_stop">Stop</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="alert_call_title">You are making call...</string>
+    <string name="alert_call_title">Calling...</string>
+    <string name="alert_call_msg">You are redirected to device Phone app to make call</string>
     <string name="empty_review_list">No Reviews found.</string>
     <string name="empty_favorite_list">No Favorites marked.</string>
 
@@ -36,9 +37,10 @@
     <string name="write_review">Write Review</string>
 
     <string name="social_share_app_info">Hey, I am Sharing this from Foodbook Android App!</string>
-    <string name="location_disabled_title">GPS Location Disabled</string>
-    <string name="location_unavailable">Unable to retrieve current location.\nCheck device settings and relaunch the app</string>
-
+    <string name="location_disabled_title">Location Disabled</string>
+    <string name="location_disabled_mg">You need to enable device location to continue working with the app </string>
+    <string name="location_error_title">Device location Retrieval failed</string>
+    <string name="location_error_msg">Please Check device settings or try rebooting the device</string>
     <string name="settings_radius_title">Search Radius</string>
     <string name="select_radius_title">Select Search Radius (In Meters)</string>
     <string name="distance_title">Distance : </string>

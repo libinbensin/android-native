@@ -23,10 +23,11 @@ public abstract class AlertDialogFragment extends DialogFragment
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		super.onCreateDialog(savedInstanceState);
-		Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.dialog_light));
+		Builder builder = new AlertDialog.Builder(getActivity().getActionBar().getThemedContext());
 		AlertDialog dialog = builder.create();
 
-		dialog.setMessage(getResources().getString(R.string.alert_call_title));
+		dialog.setTitle(getResources().getString(R.string.alert_call_title));
+        dialog.setMessage(getResources().getString(R.string.alert_call_msg));
 		dialog.setButton(DialogInterface.BUTTON_POSITIVE, AppConstant.OK,new OnClickListener() {
 			
 			@Override
