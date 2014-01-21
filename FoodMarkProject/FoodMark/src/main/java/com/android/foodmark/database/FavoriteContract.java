@@ -15,7 +15,7 @@ public final class FavoriteContract
     public abstract static class FavoriteEntry implements BaseColumns
     {
         public static final String TABLE_NAME = "FAVORITE";
-        public static final String COLUMN_NAME_ENTRY_ID ="FAVORITE_ID";
+        public static final String COLUMN_ENTRY_ID ="FAVORITE_ID";
 
         public static final String COLUMN_TITLE = "TITLE";
         public static final String COLUMN_VICINITY = "VICINITY";
@@ -41,7 +41,7 @@ public final class FavoriteContract
 
     public static final String CREATE_FAVORITE_TABLE = CREATE_TABLE + SPACE +
             FavoriteEntry.TABLE_NAME + SPACE + OPEN_BRACKET + FavoriteEntry._ID + SPACE +
-            INTEGER_PRIMARY_KEY + COMMA_SEP + FavoriteEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE +
+            INTEGER_PRIMARY_KEY + COMMA_SEP + FavoriteEntry.COLUMN_ENTRY_ID + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_TITLE + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_VICINITY  + TEXT_TYPE +
             COMMA_SEP + FavoriteEntry.COLUMN_RATING  + TEXT_TYPE +
