@@ -29,6 +29,9 @@ public class PlaceList extends BaseModel
 	private String distance;
 
     private boolean favorite;
+
+    @SerializedName("id")
+    private String placeId;
 	
 
 	/**
@@ -120,5 +123,15 @@ public class PlaceList extends BaseModel
     public void setFavorite(boolean favorite)
     {
         this.favorite = favorite;
+    }
+
+    public String getPlaceId()
+    {
+        return placeId;
+    }
+
+    public void setPlaceId(String placeId)
+    {
+        this.placeId = placeId;
     }
 }

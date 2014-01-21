@@ -30,6 +30,7 @@ public final class FavoriteExecutor
     {
         ContentValues contentValues = new ContentValues();
 
+        contentValues.put(FavoriteEntry.COLUMN_ENTRY_ID, placeList.getPlaceId());
         contentValues.put(FavoriteEntry.COLUMN_TITLE, placeList.getDescription());
         contentValues.put(FavoriteEntry.COLUMN_VICINITY, placeList.getVicinity());
         contentValues.put(FavoriteEntry.COLUMN_RATING, placeList.getRating());
@@ -52,8 +53,8 @@ public final class FavoriteExecutor
     public static void update(SQLiteDatabase db, PlaceList placeList)
     {
         ContentValues contentValues = new ContentValues();
-        String whereClause = FavoriteEntry.COLUMN_REFERENCE + "= ? ";
-        String[] whereArgs = new String[]{placeList.getReference()};
+        String whereClause = FavoriteEntry.COLUMN_ENTRY_ID + "= ? ";
+        String[] whereArgs = new String[]{placeList.getPlaceId()};
 
         contentValues.put(FavoriteEntry.COLUMN_IS_FAVORITE , placeList.isFavorite() ? 1 : 0);
 
@@ -62,8 +63,8 @@ public final class FavoriteExecutor
 
     public static void remove(SQLiteDatabase db, PlaceList placeList)
     {
-        String whereClause = FavoriteEntry.COLUMN_REFERENCE + "= ? ";
-        String[] whereArgs = new String[]{placeList.getReference()};
+        String whereClause = FavoriteEntry.COLUMN_ENTRY_ID + "= ? ";
+        String[] whereArgs = new String[]{placeList.getPlaceId()};
 
         db.delete(FavoriteContract.FavoriteEntry.TABLE_NAME, whereClause, whereArgs);
     }
@@ -72,6 +73,7 @@ public final class FavoriteExecutor
     {
         SortedMap<Double,PlaceList> placeHashMap = new TreeMap<Double,PlaceList>();
         String[] queryList = {
+                FavoriteEntry.COLUMN_ENTRY_ID ,
                 FavoriteEntry.COLUMN_TITLE ,
                 FavoriteEntry.COLUMN_VICINITY ,
                 FavoriteEntry.COLUMN_RATING ,
@@ -90,6 +92,8 @@ public final class FavoriteExecutor
                 PlaceList placeList = new PlaceList();
                 int index = 0;
 
+                index = cursor.getColumnIndex(FavoriteEntry.COLUMN_ENTRY_ID);
+                placeList.setPlaceId(cursor.getString(index));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_TITLE);
                 placeList.setDescription(cursor.getString(index));
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_VICINITY);
@@ -129,14 +133,14 @@ public final class FavoriteExecutor
 
     public static boolean isFavorite(SQLiteDatabase db , PlaceList placeList)
     {
-        String[] selectionArgs = new String[]{FavoriteEntry._ID,FavoriteEntry.COLUMN_REFERENCE};
+        String[] selectionArgs = new String[]{FavoriteEntry._ID,FavoriteEntry.COLUMN_ENTRY_ID};
 
         // check if row exists
         Cursor cursor = db.query(
                 FavoriteEntry.TABLE_NAME,
                 selectionArgs,
-                FavoriteEntry.COLUMN_REFERENCE + " = '" +
-                placeList.getReference()+"'",
+                FavoriteEntry.COLUMN_ENTRY_ID + " = '" +
+                placeList.getPlaceId()+"'",
                 null,null,null,null);
 
         if(cursor != null && cursor.getCount() > 0)
