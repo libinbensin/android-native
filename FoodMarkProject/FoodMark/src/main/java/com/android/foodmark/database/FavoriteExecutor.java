@@ -110,8 +110,10 @@ public final class FavoriteExecutor
                 placeList.setFavorite( (cursor.getInt(index) == 1 ) ? true : false);
                 index = cursor.getColumnIndex(FavoriteEntry.COLUMN_ICON_URL);
                 placeList.setIcon(cursor.getString(index));
-
-                placeHashMap.put(Double.valueOf(placeList.getDistance()), placeList);
+                if(AppUtil.hasValue(placeList.getDistance()))
+                {
+                    placeHashMap.put(Double.valueOf(placeList.getDistance()), placeList);
+                }
             }
             while (cursor.moveToNext());
 
