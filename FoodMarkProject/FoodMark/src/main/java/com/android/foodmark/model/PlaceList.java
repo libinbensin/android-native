@@ -1,5 +1,6 @@
 package com.android.foodmark.model;
 
+import com.android.foodmark.constants.AppConstant;
 import com.google.gson.annotations.SerializedName;
 
 public class PlaceList extends BaseModel
@@ -26,7 +27,7 @@ public class PlaceList extends BaseModel
 	
 	private Geometry geometry;
 	/** distance in miles */
-	private String distance;
+	private String distance = AppConstant.BLANK;
 
     private boolean favorite;
 

@@ -3,6 +3,7 @@ package com.android.foodmark.utils;
 import android.location.Location;
 
 import com.android.foodmark.MainApplication;
+import com.android.foodmark.constants.AppConstant;
 import com.android.foodmark.model.Geometry;
 
 import java.text.DecimalFormat;
@@ -15,6 +16,10 @@ public class AppLocationUtil
      */
     public static String getDistance(String lat, String lng)
     {
+        if(!AppUtil.hasValue(lat) || !AppUtil.hasValue(lng))
+        {
+            return AppConstant.BLANK;
+        }
         Double toLat = Double.valueOf(lat);
         Double toLng = Double.valueOf(lng);
 
