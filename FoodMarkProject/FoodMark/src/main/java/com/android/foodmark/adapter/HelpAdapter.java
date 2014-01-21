@@ -20,7 +20,7 @@ public class HelpAdapter extends ArrayAdapter<HelpData>
 
     public HelpAdapter(Context context)
     {
-        super(context, R.layout.help_list);
+        super(((Activity)context).getActionBar().getThemedContext(), R.layout.help_list);
         mContext = context;
     }
 
