@@ -1,0 +1,107 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.foodbook"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <!-- The following two permissions are not required to use
+         Google Maps Android API v2, but are recommended. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <uses-feature android:name="android.hardware.camera"/>
+
+    <application
+        android:name="com.android.foodbook.MainApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/app_launcher"
+        android:label="@string/app_name">
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCyQKnruyjIQoNOdcxWEE0lRUm5J9k_FMM"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activity.PlaceListActivity"
+            android:label="@string/app_name"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.PlaceDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <!-- android:label="@string/app_name" -->
+            <!--  meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow"/-->
+        </activity>
+
+        <activity android:name=".activity.AudioListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
+        <activity android:name=".activity.VideoListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
+        <activity
+            android:name=".activity.VideoDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
+        <activity android:name=".activity.CameraActivity"
+            android:screenOrientation="landscape">
+        </activity>
+
+        <activity android:name=".activity.FavoriteActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
+        <activity android:name=".activity.PlaceTabActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+
+        <activity android:name=".activity.MapActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <activity android:name=".activity.WebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+
+        <activity android:name=".activity.PlusActivity"
+
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <activity android:name=".activity.SettingsActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <activity android:name=".activity.HelpActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <service android:name=".services.TimeOutService"></service>
+    </application>
+
+
+</manifest>
